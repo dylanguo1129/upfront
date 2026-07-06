@@ -175,6 +175,17 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .soon .badge{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:6px 13px;margin-bottom:16px}
 .soon h2{font-family:'Space Grotesk';font-weight:700;font-size:23px;color:var(--ink);letter-spacing:-0.01em;margin-bottom:10px}
 .soon p{font-size:15px;color:var(--body);max-width:46ch;margin:0 auto;line-height:1.6}
+.tc-link{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.auth-agree{font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.5}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(21,20,15,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-card{background:#fff;border:1px solid var(--line);border-radius:18px;max-width:640px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 30px 80px -40px rgba(0,0,0,.4)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);flex-shrink:0}
+.modal-head h2{font-family:'Space Grotesk';font-weight:700;font-size:19px;color:var(--ink)}
+.modal-close{border:0;background:var(--tint);border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:17px;line-height:1;color:var(--body)}
+.modal-body{padding:20px 24px 26px;overflow-y:auto;font-size:13.5px;line-height:1.65;color:var(--body)}
+.modal-body h3{font-family:'Space Grotesk';font-weight:600;font-size:14.5px;color:var(--ink);margin:18px 0 6px}
+.modal-body p{margin:0 0 10px}.modal-body ul{margin:0 0 10px;padding-left:20px}.modal-body li{margin:4px 0}
+.modal-body strong{color:var(--ink)}
 .foot-note{font-size:12px;color:var(--muted);margin-top:30px;border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -199,6 +210,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
       <button class="btn btn-primary" style="width:100%;margin-top:6px" type="submit" id="au_submit">Sign in</button>
     </form>
     <p class="auth-note" id="au_note">Passwords are hashed in your browser with PBKDF2 (SHA-256, 210,000 iterations) and a random salt, never stored in plain text. Accounts are local to this browser.</p>
+    <p class="auth-agree">By creating an account or signing in, you agree to the <span class="tc-link" data-tc>Terms &amp; Conditions</span>. Please do not enter sensitive personal or financial information.</p>
   </div>
 </div>
 
@@ -332,8 +344,38 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
   </section>
 
   <div class="foot-note" id="footNote"></div>
+  <div style="font-size:12px;color:var(--muted);margin-top:10px"><span class="tc-link" data-tc>Terms &amp; Conditions</span></div>
 </main>
 <datalist id="apts"></datalist>
+</div>
+
+<div id="tcModal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head"><h2>Terms &amp; Conditions</h2><button class="modal-close" id="tcClose" aria-label="Close">&times;</button></div>
+    <div class="modal-body">
+      <p style="color:var(--muted)">Last updated 6 July 2026. By creating an account or using Upfront, you agree to these terms.</p>
+      <h3>1. What Upfront is</h3>
+      <p>Upfront is an early-stage tool for exploring Canadian credit-card recommendations and premium-cabin award travel. It is provided <strong>"as is"</strong>, for general information only, and is <strong>not</strong> financial, travel, tax, or legal advice. Card offers and award availability shown may be out of date or simulated; always confirm with the card issuer or airline before you act.</p>
+      <h3>2. Your account and data</h3>
+      <p>To use the workspace you create an account with an email address and a password. Passwords are hashed by our authentication provider using industry-standard methods and are <strong>never stored in plain text</strong>. We store your email address and the trip plans you choose to save. Data is sent over an encrypted (HTTPS) connection, and each account can only access its own data.</p>
+      <h3>3. Security, and why you must not enter sensitive information</h3>
+      <p>We take reasonable measures to protect your account, but <strong>no website or online service can be guaranteed to be 100% secure.</strong> You use Upfront at your own risk. Do <strong>not</strong> enter sensitive personal or financial information into Upfront. In particular, never enter:</p>
+      <ul>
+        <li>Social Insurance Numbers or any government identification;</li>
+        <li>credit-card, debit-card, or bank-account numbers;</li>
+        <li>online-banking or any other website's login credentials;</li>
+        <li>health, biometric, or other sensitive personal information;</li>
+        <li>any password you also use on another website.</li>
+      </ul>
+      <p>Please choose a password unique to Upfront.</p>
+      <h3>4. Limitation of liability</h3>
+      <p>To the maximum extent permitted by applicable law, Upfront and its operators are <strong>not liable</strong> for any loss, damage, or harm arising from unauthorized access to, or the theft, loss, or disclosure of, any information you provide, including as a result of hacking, a third-party service-provider breach, or other events beyond our reasonable control. Because we ask you not to store sensitive information, you are responsible for whatever information you choose to enter.</p>
+      <h3>5. Acceptable use</h3>
+      <p>Do not attempt to breach, overload, probe, or reverse-engineer the service in order to attack it, and do not attempt to access other users' data.</p>
+      <h3>6. Changes and contact</h3>
+      <p>We may update these terms from time to time; your continued use of Upfront means you accept the current version. Questions: hello@upfront.example. These terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable there.</p>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -730,6 +772,11 @@ $("#authForm").onsubmit = async (e) => {
   finally { $("#au_submit").disabled = false; }
 };
 $("#logoutBtn").onclick = (e) => { e.preventDefault(); auth.logout(); };
+
+/* ---------- terms & conditions modal ---------- */
+document.querySelectorAll("[data-tc]").forEach((el) => el.onclick = () => $("#tcModal").classList.remove("hidden"));
+$("#tcClose").onclick = () => $("#tcModal").classList.add("hidden");
+$("#tcModal").onclick = (e) => { if (e.target.id === "tcModal") $("#tcModal").classList.add("hidden"); };
 
 /* ---------- adapt the sign-in screen to the backend, then restore any existing session ---------- */
 (async () => {
