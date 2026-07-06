@@ -1,12 +1,7 @@
 // ── Upfront backend config ─────────────────────────────────────────────
-// Leave both blank to run fully on-device (accounts + saved trips live in this
-// browser's localStorage). Fill both in to switch on cross-device accounts
-// backed by your free Supabase project, so users can sign in from any device.
-//
-// Where to find them:  Supabase dashboard  ->  Project Settings  ->  API
-//   SUPABASE_URL       = "Project URL"      (e.g. https://abcdefgh.supabase.co)
-//   SUPABASE_ANON_KEY  = "anon public" key  (safe to publish; access is enforced
-//                        by row-level security, which the setup SQL turns on)
-// After filling these in, commit + push. Full steps in SUPABASE_SETUP.md.
-export const SUPABASE_URL = "";
-export const SUPABASE_ANON_KEY = "";
+// Cross-device accounts are ON: these point at the Upfront Supabase project.
+// The publishable key is safe to publish; all data access is enforced by the
+// row-level-security policy created in supabase.sql. To go back to on-device
+// only, blank both values. Full notes in SUPABASE_SETUP.md.
+export const SUPABASE_URL = "https://dnhygawsxnnhagyscxmc.supabase.co";
+export const SUPABASE_ANON_KEY = "sb_publishable_2THA7eq6UUY-tjpzGUGK7A_qC1wh3rg";
