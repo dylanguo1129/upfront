@@ -186,14 +186,14 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
       <button type="button" class="auth-tab" data-mode="register">Create account</button>
     </div>
     <form id="authForm" autocomplete="on">
-      <label>Username</label>
+      <label id="au_user_label">Username</label>
       <input id="au_user" name="username" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
       <label style="margin-top:12px">Password</label>
       <input id="au_pass" name="password" type="password" autocomplete="current-password">
       <div id="au_err" class="auth-err"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:6px" type="submit" id="au_submit">Sign in</button>
     </form>
-    <p class="auth-note">Passwords are hashed in your browser with PBKDF2 (SHA-256, 210,000 iterations) and a random salt, never stored in plain text. Accounts are local to this browser.</p>
+    <p class="auth-note" id="au_note">Passwords are hashed in your browser with PBKDF2 (SHA-256, 210,000 iterations) and a random salt, never stored in plain text. Accounts are local to this browser.</p>
   </div>
 </div>
 
@@ -323,6 +323,12 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 
 <script type="module">
 import { searchAward, recommendEarnPlan, fundableProgramNames, newCaseFile, runPipeline, getCatalog, getAirports, getPrograms, getStatus } from "./engine/index.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+
+// Backend: cross-device accounts via Supabase when configured, else on-device localStorage.
+const USE_SUPABASE = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
+let sb = null;
+async function initBackend(){ if (USE_SUPABASE && !sb){ const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"); sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } }
 
 const $ = (s) => document.querySelector(s);
 const ce = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
@@ -330,7 +336,7 @@ const nf = (n) => Number(n || 0).toLocaleString("en-CA");
 const ca = (n) => "CA$" + nf(Math.round(n));
 const slug = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-/* ---------- auth: PBKDF2 password hashing + local accounts ---------- */
+/* ---------- accounts: Supabase (cross-device) when configured, else local PBKDF2 ---------- */
 const USERS_KEY = "upfront.users.v1";
 let currentUser = null;
 const toB64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
@@ -342,7 +348,7 @@ async function pbkdf2(password, salt, iterations) {
 }
 const getUsers = () => { try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; } catch { return {}; } };
 const setUsers = (u) => localStorage.setItem(USERS_KEY, JSON.stringify(u));
-async function register(username, password) {
+async function localRegister(username, password) {
   username = username.trim();
   if (username.length < 3) throw new Error("Username must be at least 3 characters.");
   if (password.length < 6) throw new Error("Password must be at least 6 characters.");
@@ -355,7 +361,7 @@ async function register(username, password) {
   setUsers(users);
   return username;
 }
-async function login(username, password) {
+async function localLogin(username, password) {
   const rec = getUsers()[username.trim().toLowerCase()];
   if (!rec) throw new Error("No account with that username. Create one first.");
   const hash = await pbkdf2(password, fromB64(rec.salt), rec.iterations);
@@ -364,26 +370,56 @@ async function login(username, password) {
   if (!ok) throw new Error("Incorrect password.");
   return rec.username;
 }
+async function sbRegister(email, password) {
+  const { data, error } = await sb.auth.signUp({ email: email.trim(), password });
+  if (error) throw new Error(error.message);
+  if (!data.session) throw new Error("Account created. Confirm via the email we sent, then sign in. (Tip: disable 'Confirm email' in Supabase Auth settings for instant sign-in.)");
+  return data.user.email;
+}
+async function sbLogin(email, password) {
+  const { data, error } = await sb.auth.signInWithPassword({ email: email.trim(), password });
+  if (error) throw new Error(error.message);
+  return data.user.email;
+}
+const auth = {
+  register: (id, pw) => USE_SUPABASE ? sbRegister(id, pw) : localRegister(id, pw),
+  login: (id, pw) => USE_SUPABASE ? sbLogin(id, pw) : localLogin(id, pw),
+  async logout(){ if (USE_SUPABASE && sb) await sb.auth.signOut(); sessionStorage.removeItem("upfront.session"); location.reload(); },
+};
 function startSession(username) {
   currentUser = username;
-  sessionStorage.setItem("upfront.session", username);
+  if (!USE_SUPABASE) sessionStorage.setItem("upfront.session", username);
   $("#auth").classList.add("hidden");
   $("#appShell").classList.remove("hidden");
   $("#userName").textContent = username;
   initApp();
 }
-function logout() { sessionStorage.removeItem("upfront.session"); location.reload(); }
 
-/* ---------- per-user engagement storage (localStorage) ---------- */
+/* ---------- per-user engagement storage (Supabase table when configured, else localStorage) ---------- */
 const engKey = () => "upfront.eng." + (currentUser || "anon");
 const getEng = () => { try { return JSON.parse(localStorage.getItem(engKey())) || {}; } catch { return {}; } };
 const setEng = (m) => localStorage.setItem(engKey(), JSON.stringify(m));
-function saveEngagement(cf) { const m = getEng(); m[cf.id] = cf; setEng(m); }
-function listEngagements() {
-  return Object.values(getEng())
-    .map((cf) => ({ id: cf.id, status: cf.status, verdict: cf.realityCheck?.verdict, value: cf.value?.valueDelivered, route: cf.request ? `${cf.request.from}-${cf.request.to}` : "", cabin: cf.request?.cabin, name: cf.client?.name }))
-    .sort((a, b) => (b.value || 0) - (a.value || 0));
-}
+const summarize = (cf) => ({ id: cf.id, status: cf.status, verdict: cf.realityCheck?.verdict, value: cf.value?.valueDelivered, route: cf.request ? `${cf.request.from}-${cf.request.to}` : "", cabin: cf.request?.cabin, name: cf.client?.name });
+const store = {
+  async save(cf) {
+    if (USE_SUPABASE) {
+      const { data: u } = await sb.auth.getUser();
+      await sb.from("engagements").upsert({ user_id: u.user.id, eng_id: cf.id, data: cf, value: cf.value?.valueDelivered ?? null }, { onConflict: "user_id,eng_id" });
+    } else { const m = getEng(); m[cf.id] = cf; setEng(m); }
+  },
+  async list() {
+    if (USE_SUPABASE) {
+      const { data, error } = await sb.from("engagements").select("data");
+      if (error || !data) return [];
+      return data.map((r) => summarize(r.data)).sort((a, b) => (b.value || 0) - (a.value || 0));
+    }
+    return Object.values(getEng()).map(summarize).sort((a, b) => (b.value || 0) - (a.value || 0));
+  },
+  async get(id) {
+    if (USE_SUPABASE) { const { data } = await sb.from("engagements").select("data").eq("eng_id", id).maybeSingle(); return data?.data || null; }
+    return getEng()[id] || null;
+  },
+};
 
 /* ---------- api shim: same call sites as the server build, now backed by the in-browser engine ---------- */
 async function api(path, body) {
@@ -397,11 +433,11 @@ async function api(path, body) {
     const intake = body;
     intake.id = intake.id || `eng-${slug(intake.client?.name) || "client"}-${slug(intake.request?.from)}-${slug(intake.request?.to)}`;
     const cf = await runPipeline(newCaseFile(intake), { autoApprove: true });
-    saveEngagement(cf);
+    await store.save(cf);
     return cf;
   }
-  if (path === "/api/engagements") return listEngagements();
-  if (path.startsWith("/api/engagement/")) { const id = decodeURIComponent(path.split("/").pop()); return getEng()[id] || { error: "not found" }; }
+  if (path === "/api/engagements") return store.list();
+  if (path.startsWith("/api/engagement/")) { const id = decodeURIComponent(path.split("/").pop()); return (await store.get(id)) || { error: "not found" }; }
   throw new Error("unknown api " + path);
 }
 
@@ -669,19 +705,32 @@ document.querySelectorAll(".auth-tab").forEach((t) => t.onclick = () => {
 $("#authForm").onsubmit = async (e) => {
   e.preventDefault();
   $("#au_err").textContent = "";
+  $("#au_submit").disabled = true;
   const u = $("#au_user").value, p = $("#au_pass").value;
   try {
-    if (!crypto || !crypto.subtle) throw new Error("Secure context required. Open this page over https or localhost.");
-    const name = authMode === "register" ? await register(u, p) : await login(u, p);
+    await initBackend();
+    if (!USE_SUPABASE && !(crypto && crypto.subtle)) throw new Error("Secure context required. Open this page over https or localhost.");
+    const name = authMode === "register" ? await auth.register(u, p) : await auth.login(u, p);
     startSession(name);
   } catch (err) { $("#au_err").textContent = err.message; }
+  finally { $("#au_submit").disabled = false; }
 };
-$("#logoutBtn").onclick = (e) => { e.preventDefault(); logout(); };
+$("#logoutBtn").onclick = (e) => { e.preventDefault(); auth.logout(); };
 
-/* ---------- session restore (same tab) ---------- */
-const sess = sessionStorage.getItem("upfront.session");
-if (sess && getUsers()[sess.toLowerCase()]) startSession(getUsers()[sess.toLowerCase()].username);
-else $("#au_user").focus();
+/* ---------- adapt the sign-in screen to the backend, then restore any existing session ---------- */
+(async () => {
+  if (USE_SUPABASE) {
+    $("#au_user_label").textContent = "Email";
+    $("#au_user").type = "email";
+    $("#au_user").setAttribute("autocomplete", "email");
+    $("#au_note").textContent = "Accounts are stored in your Supabase project with server-side password security, and follow you to any device you sign in from.";
+    try { await initBackend(); const { data } = await sb.auth.getSession(); if (data.session) { startSession(data.session.user.email); return; } } catch {}
+  } else {
+    const sess = sessionStorage.getItem("upfront.session");
+    if (sess && getUsers()[sess.toLowerCase()]) { startSession(getUsers()[sess.toLowerCase()].username); return; }
+  }
+  $("#au_user").focus();
+})();
 </script>
 </body>
 </html>
