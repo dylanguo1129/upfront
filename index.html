@@ -186,6 +186,49 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .modal-body h3{font-family:'Space Grotesk';font-weight:600;font-size:14.5px;color:var(--ink);margin:18px 0 6px}
 .modal-body p{margin:0 0 10px}.modal-body ul{margin:0 0 10px;padding-left:20px}.modal-body li{margin:4px 0}
 .modal-body strong{color:var(--ink)}
+/* next best card survey */
+.nbc-sec{margin-bottom:18px}
+.opt{font-weight:400;color:var(--muted);font-size:11.5px;text-transform:none;letter-spacing:0}
+.nbc-cardresults{margin-top:6px}
+.nbc-cardopt{padding:9px 12px;border:1px solid var(--line);border-top:0;font-size:13.5px;color:var(--ink);cursor:pointer;background:#fff;display:flex;justify-content:space-between;gap:10px}
+.nbc-cardopt:first-child{border-top:1px solid var(--line);border-radius:8px 8px 0 0}
+.nbc-cardopt:last-child{border-radius:0 0 8px 8px}
+.nbc-cardopt:hover{background:var(--tint)}
+.nbc-cardopt span{color:var(--muted);font-size:12px}
+.nbc-cardopt.muted{color:var(--muted);cursor:default}
+.nbc-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.nbc-chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--ink);background:var(--accent-soft);border-radius:999px;padding:5px 7px 5px 12px}
+.nbc-chip button{border:0;background:#fff;color:var(--accent);border-radius:999px;width:18px;height:18px;cursor:pointer;font-size:13px;line-height:1}
+.nbc-empty{font-size:12.5px;color:var(--muted)}
+.nbc-spend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 16px;margin-top:8px}
+.nbc-spendrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.nbc-spendrow>span{font-size:13.5px;color:var(--body)}
+.nbc-dollar{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding-left:10px;max-width:130px;transition:border-color .15s}
+.nbc-dollar:focus-within{border-color:var(--accent)}
+.nbc-dollar>span{color:var(--muted);font-size:14px}
+.nbc-dollar input{border:0;padding:9px 10px 9px 4px}
+.nbc-dollar input:focus{outline:none}
+.nbc-prow{display:grid;grid-template-columns:1fr 130px 1fr 120px auto;gap:8px;align-items:center;margin-bottom:8px}
+.nbc-rm{border:0;background:var(--tint);border-radius:8px;width:32px;height:32px;cursor:pointer;color:var(--body);font-size:15px}
+.nbc-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.nbc-chips-select{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.nbc-rec{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.nbc-rec:first-of-type{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.nbc-rec-rank{font-family:'Space Grotesk';font-weight:700;font-size:19px;color:var(--accent);background:var(--accent-soft);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.nbc-rec-name{font-family:'Space Grotesk';font-weight:600;font-size:17px;color:var(--ink)}
+.nbc-rec-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.nbc-bonus{font-size:13px;color:var(--pos);margin-top:8px}
+.nbc-bonus.muted{color:var(--muted)}
+.nbc-bonus b{font-family:'Space Grotesk'}
+.nbc-wins{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.nbc-wins span{font-size:11.5px;color:var(--body);background:var(--tint);border-radius:6px;padding:3px 8px}
+.nbc-wins b{color:var(--ink)}
+.nbc-note{font-size:12px;color:var(--muted);margin-top:8px;max-width:60ch}
+.nbc-rec-val{text-align:right;min-width:120px}
+.nbc-rec-val .big{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--ink)}
+.nbc-rec-val .lab{font-size:11px;color:var(--muted)}
+.nbc-rec-val .alt{font-size:12px;color:var(--body);margin-top:6px}
+@media(max-width:680px){.nbc-spend{grid-template-columns:1fr}.nbc-grid4{grid-template-columns:1fr 1fr}.nbc-prow{grid-template-columns:1fr 1fr}.nbc-rec{grid-template-columns:auto 1fr}.nbc-rec-val{text-align:left;grid-column:1 / -1}}
 .foot-note{font-size:12px;color:var(--muted);margin-top:30px;border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -273,16 +316,49 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
   <!-- ============ CARDS (EARN) ============ -->
   <section id="view-cards">
     <div class="head">
-      <h1>Earn the points your trip needs</h1>
-      <p class="sub">Plan the exact Canadian cards to reach a program, browse the 70-card catalogue, or trace how bank points transfer to airlines. The recommendation is commission-blind: no card pays us.</p>
+      <h1>Your next best credit card</h1>
+      <p class="sub">Enter the cards you have and how you spend, and get your next best card ranked by real net value over what you already hold. You can also browse the 70-card catalogue, plan an earn for a trip, or trace how points transfer. Commission-blind: no card pays us.</p>
     </div>
     <div class="tabs" style="margin:18px 0 6px">
-      <div class="tab on" data-sub="plan">Earn planner</div>
+      <div class="tab on" data-sub="nextcard">Next best card</div>
+      <div class="tab" data-sub="plan">Earn planner</div>
       <div class="tab" data-sub="catalog">Card catalogue</div>
       <div class="tab" data-sub="transfers">Transfer graph</div>
     </div>
 
-    <div id="sub-plan">
+    <div id="sub-nextcard">
+      <form id="nbcForm" class="panel" style="margin-top:14px">
+        <div class="nbc-sec">
+          <label>Cards you have now <span class="opt">so we only credit what a new card adds</span></label>
+          <input id="nbc_cardsearch" placeholder="Search to add a card you hold (e.g. Cobalt, TD Aeroplan)..." autocomplete="off">
+          <div id="nbc_cardresults" class="nbc-cardresults"></div>
+          <div id="nbc_held" class="nbc-chips"></div>
+        </div>
+        <div class="nbc-sec">
+          <label>Your average monthly spend (CA$)</label>
+          <div id="nbc_spend" class="nbc-spend"></div>
+        </div>
+        <div class="nbc-sec">
+          <label>Upcoming big purchases <span class="opt">optional, helps unlock welcome bonuses</span></label>
+          <div id="nbc_purchases"></div>
+          <button type="button" class="mini" id="nbc_addpurchase" style="margin-top:8px">+ Add a purchase</button>
+        </div>
+        <div class="nbc-sec nbc-grid4">
+          <div><label>Annual income</label><input id="nbc_income" type="number" placeholder="optional"></div>
+          <div><label>Credit score</label><select id="nbc_credit"><option value="">Not sure</option><option value="fair">Fair</option><option value="good" selected>Good</option><option value="excellent">Excellent</option></select></div>
+          <div><label>New cards you open</label><select id="nbc_freq"><option value="rare">Rarely</option><option value="some" selected>Sometimes</option><option value="often">Often</option></select></div>
+          <div><label>Rank by</label><select id="nbc_rankby"><option value="firstYear" selected>First-year value</option><option value="ongoing">Ongoing value</option></select></div>
+        </div>
+        <div class="nbc-sec">
+          <label>Where you'll redeem <span class="opt">optional, lifts how we value points</span></label>
+          <div id="nbc_travel" class="nbc-chips-select"></div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%">Find my next best cards</button>
+      </form>
+      <div id="nbcResult"></div>
+    </div>
+
+    <div id="sub-plan" class="hidden">
       <form id="earnForm" class="panel form-grid" style="margin-top:14px">
         <div style="grid-column:span 4"><label>Target program</label><select id="e_program"></select></div>
         <div style="grid-column:span 2"><label>Points needed</label><input id="e_points" type="number" value="182000"></div>
@@ -379,7 +455,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 </div>
 
 <script type="module">
-import { searchAward, recommendEarnPlan, fundableProgramNames, newCaseFile, runPipeline, getCatalog, getAirports, getPrograms, getStatus } from "./engine/index.js";
+import { searchAward, recommendEarnPlan, fundableProgramNames, recommendCards, newCaseFile, runPipeline, getCatalog, getAirports, getPrograms, getStatus } from "./engine/index.js";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
 // Backend: cross-device accounts via Supabase when configured, else on-device localStorage.
@@ -482,6 +558,7 @@ const store = {
 async function api(path, body) {
   if (path === "/api/search") return searchAward(body);
   if (path === "/api/earn") return recommendEarnPlan(body.profile || {}, body.target || {});
+  if (path === "/api/recommend") return recommendCards(body.input || {}, body.options || {});
   if (path === "/api/programs") return getPrograms();
   if (path === "/api/catalog") return getCatalog();
   if (path === "/api/airports") return getAirports();
@@ -577,10 +654,10 @@ let programsLoaded = false, catalog = null, catFilter = "All";
 document.querySelectorAll("#view-cards .tab").forEach((t) => t.onclick = () => setSub(t.dataset.sub));
 function setSubBase(name) {
   document.querySelectorAll("#view-cards .tab").forEach((x) => x.classList.toggle("on", x.dataset.sub === name));
-  ["plan", "catalog", "transfers"].forEach((n) => $("#sub-" + n).classList.toggle("hidden", n !== name));
-  if (name !== "plan" && !catalog) loadCatalog();
+  ["nextcard", "plan", "catalog", "transfers"].forEach((n) => $("#sub-" + n).classList.toggle("hidden", n !== name));
+  if ((name === "catalog" || name === "transfers") && !catalog) loadCatalog();
 }
-function setSub(name) { setSubBase(name); if (name === "transfers") { (catalog ? Promise.resolve() : loadCatalog()).then(() => renderTransfers()); } if (name === "catalog" && catalog) renderCatalog(); }
+function setSub(name) { setSubBase(name); if (name === "nextcard") initNextCard(); if (name === "transfers") { (catalog ? Promise.resolve() : loadCatalog()).then(() => renderTransfers()); } if (name === "catalog" && catalog) renderCatalog(); }
 async function loadPrograms() {
   programsLoaded = true;
   const r = await api("/api/programs");
@@ -665,6 +742,92 @@ function renderTransfers() {
   if (!Object.keys(byFrom).length) g.innerHTML = '<div class="empty">No transfer routes loaded.</div>';
 }
 
+/* ---------- CARDS: next best card (survey -> recommend) ---------- */
+const CATEGORY_LABELS = { groceries: "Groceries", dining: "Dining out", gas: "Gas", travel: "Travel", transit: "Transit", drugstore: "Drugstore", recurring: "Bills & subscriptions", entertainment: "Entertainment", foreign: "Foreign purchases", everything_else: "Everything else" };
+const SPEND_ORDER = ["groceries", "dining", "gas", "travel", "transit", "recurring", "entertainment", "drugstore", "foreign", "everything_else"];
+const REGION_LABELS = { general: "General / flexible", domestic: "Within Canada", north_america: "North America", europe: "Europe", asia: "Asia", latam: "Latin America" };
+let nextcardInited = false, nbcHeld = new Set(), nbcTravel = new Set();
+async function initNextCard() {
+  if (nextcardInited) return; nextcardInited = true;
+  if (!catalog) catalog = await api("/api/catalog");
+  window.curById = window.curById || Object.fromEntries(catalog.currencies.map((c) => [c.id, c]));
+  window.__catById = Object.fromEntries(catalog.cards.map((c) => [c.id, c]));
+  $("#nbc_spend").innerHTML = SPEND_ORDER.map((c) => `<div class="nbc-spendrow"><span>${CATEGORY_LABELS[c]}</span><div class="nbc-dollar"><span>$</span><input type="number" min="0" data-cat="${c}" placeholder="0"></div></div>`).join("");
+  const defaults = { groceries: 800, dining: 400, recurring: 300, everything_else: 600 };
+  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (defaults[i.dataset.cat]) i.value = defaults[i.dataset.cat]; });
+  $("#nbc_travel").innerHTML = Object.entries(REGION_LABELS).map(([k, v]) => `<span class="fchip" data-region="${k}">${v}</span>`).join("");
+  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.onclick = () => { ch.classList.toggle("on"); if (nbcTravel.has(ch.dataset.region)) nbcTravel.delete(ch.dataset.region); else nbcTravel.add(ch.dataset.region); });
+  $("#nbc_cardsearch").oninput = renderNbcSearch;
+  $("#nbc_addpurchase").onclick = addNbcPurchase;
+  renderNbcHeld();
+}
+function renderNbcSearch() {
+  const q = $("#nbc_cardsearch").value.toLowerCase().trim();
+  const box = $("#nbc_cardresults");
+  if (!q) { box.innerHTML = ""; return; }
+  const matches = catalog.cards.filter((c) => !nbcHeld.has(c.id) && (c.name + " " + c.issuer).toLowerCase().includes(q)).slice(0, 6);
+  box.innerHTML = matches.map((c) => `<div class="nbc-cardopt" data-id="${c.id}">${c.name}<span>${c.issuer}</span></div>`).join("") || '<div class="nbc-cardopt muted">No match</div>';
+  box.querySelectorAll(".nbc-cardopt[data-id]").forEach((el) => el.onclick = () => { nbcHeld.add(el.dataset.id); $("#nbc_cardsearch").value = ""; box.innerHTML = ""; renderNbcHeld(); });
+}
+function renderNbcHeld() {
+  const c = window.__catById;
+  $("#nbc_held").innerHTML = [...nbcHeld].map((id) => `<span class="nbc-chip">${c[id]?.name || id}<button type="button" data-id="${id}">&times;</button></span>`).join("") || '<span class="nbc-empty">No cards added yet, that is fine.</span>';
+  $("#nbc_held").querySelectorAll("button[data-id]").forEach((b) => b.onclick = () => { nbcHeld.delete(b.dataset.id); renderNbcHeld(); });
+}
+function addNbcPurchase() {
+  const row = ce("div", "nbc-prow");
+  row.innerHTML = `<input placeholder="Label (e.g. furniture)" data-f="label"><div class="nbc-dollar"><span>$</span><input type="number" min="0" placeholder="amount" data-f="amount"></div><select data-f="category">${SPEND_ORDER.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("")}</select><input type="number" min="0" placeholder="in X months" data-f="months"><button type="button" class="nbc-rm" aria-label="Remove">&times;</button>`;
+  row.querySelector(".nbc-rm").onclick = () => row.remove();
+  $("#nbc_purchases").appendChild(row);
+}
+$("#nbcForm").onsubmit = async (e) => {
+  e.preventDefault();
+  const spend = [...$("#nbc_spend").querySelectorAll("input")].map((i) => ({ category: i.dataset.cat, monthlyCents: Math.round((+i.value || 0) * 100) })).filter((s) => s.monthlyCents > 0);
+  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; const amt = +g("amount") || 0; return amt > 0 ? { label: g("label") || "Upcoming purchase", amountCents: Math.round(amt * 100), category: g("category"), monthsFromNow: Math.max(0, parseInt(g("months") || "0", 10) || 0) } : null; }).filter(Boolean);
+  const income = $("#nbc_income").value, credit = $("#nbc_credit").value, freq = $("#nbc_freq").value;
+  const input = {
+    profile: { annualIncomeCents: income ? Math.round((+income || 0) * 100) : undefined, creditScoreBand: credit || undefined, pointsSavvy: freq !== "rare", willingToPayFees: true },
+    spend, holdings: [...nbcHeld].map((cardId) => ({ cardId })), bonusHistory: [], upcomingPurchases: purchases, travelPlans: [...nbcTravel].map((region) => ({ region })),
+  };
+  const rankBy = $("#nbc_rankby").value;
+  $("#nbcResult").innerHTML = '<div class="panel" style="margin-top:16px"><div class="skel" style="width:45%"></div><div class="skel" style="width:75%;margin-top:10px"></div><div class="skel" style="width:60%;margin-top:10px"></div></div>';
+  const recs = await api("/api/recommend", { input, options: { rankBy } });
+  renderRecos(recs, rankBy, spend.length === 0);
+};
+function renderRecos(recs, rankBy, noSpend) {
+  const el = $("#nbcResult"); el.innerHTML = "";
+  if (!recs || !recs.length) { el.innerHTML = `<div class="empty" style="margin-top:16px">${noSpend ? "Add your monthly spend above, then find your next best cards." : "Nothing beats the cards you already hold for this profile. That is a good place to be."}</div>`; return; }
+  const catName = (id) => (window.curById && window.curById[id]?.name) || id;
+  const wrap = ce("div", null, `<div class="kick" style="margin:18px 0 10px">Your top ${recs.length} by ${rankBy === "ongoing" ? "ongoing yearly value" : "first-year value"}</div>`);
+  recs.forEach((r) => {
+    const b = r.breakdown || {}, wb = b.welcomeBonus;
+    const hero = rankBy === "ongoing" ? r.ongoingAnnualNetCents : r.firstYearNetCents;
+    const wins = (b.marginalEarnByCategory || []).slice(0, 3).map((m) => `<span>${m.candidateMultiplier}x ${CATEGORY_LABELS[m.category] || m.category} <b>+${ca(m.marginalValueCents / 100)}</b>/yr</span>`).join("");
+    const bonusLine = wb && wb.eligible && wb.feasible ? `<div class="nbc-bonus">Welcome bonus: <b>${nf(wb.amountPoints)}</b> ${catName(wb.currencyId)} (~${ca(wb.valueCents / 100)})${wb.offerRating ? ` · ${wb.offerRating.label}` : ""}</div>`
+      : (wb && wb.eligible && !wb.feasible ? `<div class="nbc-bonus muted">Welcome bonus not counted, your projected spend doesn't reach the minimum in the window</div>`
+      : (wb && !wb.eligible ? `<div class="nbc-bonus muted">${wb.eligibilityNote || "Bonus not available"}</div>` : ""));
+    const fee = b.annualFeeCents ? `${ca(b.annualFeeCents / 100)} annual fee${b.feeWaivedYear1 ? " · 1st yr waived" : ""}` : "No annual fee";
+    const rec = ce("div", "nbc-rec");
+    rec.innerHTML = `<div class="nbc-rec-rank">${r.rank}</div>
+      <div class="nbc-rec-main">
+        <div class="nbc-rec-name">${r.cardName}</div>
+        <div class="nbc-rec-meta">${r.issuer} · ${fee}</div>
+        ${bonusLine}
+        ${wins ? `<div class="nbc-wins">${wins}</div>` : ""}
+        ${(b.notes && b.notes.length) ? `<div class="nbc-note">${b.notes[0]}</div>` : ""}
+      </div>
+      <div class="nbc-rec-val">
+        <div class="big num">${ca(hero / 100)}</div>
+        <div class="lab">${rankBy === "ongoing" ? "ongoing / year" : "first year, net"}</div>
+        <div class="alt num">${rankBy === "ongoing" ? ca(r.firstYearNetCents / 100) + " first yr" : ca(r.ongoingAnnualNetCents / 100) + " / yr ongoing"}</div>
+      </div>`;
+    wrap.appendChild(rec);
+  });
+  const note = ce("div", "foot-note", "Ranked by net value over the cards you already hold, using deterministic math. Commission-blind: no card pays us. Offers may change, confirm with the issuer.");
+  note.style.borderTop = "0"; wrap.appendChild(note);
+  el.appendChild(wrap);
+}
+
 /* ---------- PLAN: orchestration ---------- */
 $("#runForm").onsubmit = async (e) => {
   e.preventDefault();
@@ -737,6 +900,7 @@ async function initApp() {
   const apts = await api("/api/airports");
   $("#apts").innerHTML = apts.map((a) => `<option value="${a}">`).join("");
   loadPrograms();
+  initNextCard();
   const p = new URLSearchParams(location.search);
   if (p.get("from")) $("#s_from").value = p.get("from").toUpperCase();
   if (p.get("to")) $("#s_to").value = p.get("to").toUpperCase();
