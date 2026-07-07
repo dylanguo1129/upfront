@@ -19,3 +19,22 @@ create policy "own engagements"
   for all
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
+
+-- Per-user saved survey answers (the Next Best Card profile follows you across devices).
+create table if not exists public.profiles (
+  user_id    uuid primary key references auth.users(id) on delete cascade,
+  answers    jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.profiles enable row level security;
+
+create policy "own profile"
+  on public.profiles
+  for all
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- For "forgot password" to redirect back to the app, also set (Authentication -> URL Configuration):
+--   Site URL:       https://dylanguo1129.github.io/upfront/
+--   Redirect URLs:  https://dylanguo1129.github.io/upfront/**

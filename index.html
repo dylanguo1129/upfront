@@ -43,7 +43,8 @@ nav{position:sticky;top:0;z-index:40;background:rgba(252,251,249,.86);backdrop-f
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
 .chip{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;display:flex;align-items:center;gap:6px}
 .chip .dot{width:6px;height:6px;border-radius:99px;background:var(--warn)}
-.chip.user{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft)}
+.chip.user{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft);cursor:pointer}
+.chip.user:hover{background:#E2E6FB}
 .nav-right a.site{font-size:13px;color:var(--muted);cursor:pointer}
 .nav-right a.site:hover{color:var(--ink)}
 @media(max-width:720px){.brand span.t{display:none}.tab{padding:8px 10px}#modeChip{display:none}}
@@ -229,6 +230,11 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .nbc-rec-val .lab{font-size:11px;color:var(--muted)}
 .nbc-rec-val .alt{font-size:12px;color:var(--body);margin-top:6px}
 @media(max-width:680px){.nbc-spend{grid-template-columns:1fr}.nbc-grid4{grid-template-columns:1fr 1fr}.nbc-prow{grid-template-columns:1fr 1fr}.nbc-rec{grid-template-columns:auto 1fr}.nbc-rec-val{text-align:left;grid-column:1 / -1}}
+.acct-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;color:var(--body)}
+.acct-row b{color:var(--ink);font-weight:600}
+.acct-saved{font-size:12.5px;color:var(--muted);margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.acct-danger{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--neg-soft);border-radius:11px;padding:12px 20px;background:var(--neg-soft);color:var(--neg);cursor:pointer;transition:background .15s}
+.acct-danger:hover{background:#F2D9D5}
 .foot-note{font-size:12px;color:var(--muted);margin-top:30px;border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -252,6 +258,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
       <div id="au_err" class="auth-err"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:6px" type="submit" id="au_submit">Sign in</button>
     </form>
+    <div id="au_forgot" class="hidden" style="text-align:center;margin-top:12px"><span class="tc-link" id="au_forgotlink">Forgot password?</span></div>
     <p class="auth-note" id="au_note">Passwords are hashed in your browser with PBKDF2 (SHA-256, 210,000 iterations) and a random salt, never stored in plain text. Accounts are local to this browser.</p>
     <p class="auth-agree">By creating an account or signing in, you agree to the <span class="tc-link" data-tc>Terms &amp; Conditions</span>. Please do not enter sensitive personal or financial information.</p>
   </div>
@@ -454,6 +461,33 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
   </div>
 </div>
 
+<div id="acctModal" class="modal hidden">
+  <div class="modal-card" style="max-width:440px">
+    <div class="modal-head"><h2>Account</h2><button class="modal-close" id="acctClose" aria-label="Close">&times;</button></div>
+    <div class="modal-body">
+      <div class="acct-row"><span>Signed in as</span><b id="acctEmail"></b></div>
+      <p style="color:var(--muted);font-size:12.5px;margin-top:10px;line-height:1.55">Your survey answers and saved trips are stored in your account and follow you to any device you sign in from.</p>
+      <div id="acctSaved" class="acct-saved"></div>
+      <button type="button" class="btn btn-ghost" id="acctSignout" style="width:100%;margin-top:18px">Sign out</button>
+      <button type="button" id="acctClear" class="acct-danger" style="width:100%;margin-top:8px">Delete my saved data</button>
+      <div id="acctMsg" style="font-size:12px;color:var(--muted);margin-top:12px;text-align:center;min-height:15px"></div>
+    </div>
+  </div>
+</div>
+
+<div id="pwModal" class="modal hidden">
+  <div class="modal-card" style="max-width:400px">
+    <div class="modal-head"><h2>Set a new password</h2></div>
+    <div class="modal-body">
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Choose a new password for your account.</p>
+      <label>New password</label>
+      <input id="pw_new" type="password" autocomplete="new-password">
+      <div id="pw_err" class="auth-err"></div>
+      <button type="button" class="btn btn-primary" id="pw_save" style="width:100%;margin-top:6px">Update password</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { searchAward, recommendEarnPlan, fundableProgramNames, recommendCards, newCaseFile, runPipeline, getCatalog, getAirports, getPrograms, getStatus } from "./engine/index.js";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
@@ -551,6 +585,18 @@ const store = {
   async get(id) {
     if (USE_SUPABASE) { const { data } = await sb.from("engagements").select("data").eq("eng_id", id).maybeSingle(); return data?.data || null; }
     return getEng()[id] || null;
+  },
+  async saveProfile(answers) {
+    if (USE_SUPABASE) { const { data: u } = await sb.auth.getUser(); if (u?.user) await sb.from("profiles").upsert({ user_id: u.user.id, answers, updated_at: new Date().toISOString() }); }
+    else localStorage.setItem("upfront.profile." + (currentUser || "anon"), JSON.stringify(answers));
+  },
+  async loadProfile() {
+    if (USE_SUPABASE) { const { data } = await sb.from("profiles").select("answers").maybeSingle(); return data?.answers || null; }
+    try { return JSON.parse(localStorage.getItem("upfront.profile." + (currentUser || "anon"))) || null; } catch { return null; }
+  },
+  async clearMine() {
+    if (USE_SUPABASE) { const { data: u } = await sb.auth.getUser(); if (u?.user) { await sb.from("profiles").delete().eq("user_id", u.user.id); await sb.from("engagements").delete().eq("user_id", u.user.id); } }
+    else { localStorage.removeItem("upfront.profile." + (currentUser || "anon")); localStorage.removeItem(engKey()); }
   },
 };
 
@@ -760,6 +806,27 @@ async function initNextCard() {
   $("#nbc_cardsearch").oninput = renderNbcSearch;
   $("#nbc_addpurchase").onclick = addNbcPurchase;
   renderNbcHeld();
+  const saved = await store.loadProfile();
+  if (saved) applyNbcAnswers(saved);
+}
+function gatherNbcAnswers() {
+  const spend = {};
+  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (i.value !== "") spend[i.dataset.cat] = i.value; });
+  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; return { label: g("label"), amount: g("amount"), category: g("category"), months: g("months") }; }).filter((p) => p.amount);
+  return { holdings: [...nbcHeld], spend, purchases, income: $("#nbc_income").value, credit: $("#nbc_credit").value, freq: $("#nbc_freq").value, rankBy: $("#nbc_rankby").value, travel: [...nbcTravel] };
+}
+function applyNbcAnswers(a) {
+  if (!a) return;
+  nbcHeld = new Set(a.holdings || []); renderNbcHeld();
+  if (a.spend) $("#nbc_spend").querySelectorAll("input").forEach((i) => { i.value = a.spend[i.dataset.cat] != null ? a.spend[i.dataset.cat] : ""; });
+  if (a.income != null) $("#nbc_income").value = a.income;
+  if (a.credit != null) $("#nbc_credit").value = a.credit;
+  if (a.freq) $("#nbc_freq").value = a.freq;
+  if (a.rankBy) $("#nbc_rankby").value = a.rankBy;
+  nbcTravel = new Set(a.travel || []);
+  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.classList.toggle("on", nbcTravel.has(ch.dataset.region)));
+  $("#nbc_purchases").innerHTML = "";
+  (a.purchases || []).forEach((p) => { addNbcPurchase(); const r = $("#nbc_purchases").lastElementChild; r.querySelector('[data-f="label"]').value = p.label || ""; r.querySelector('[data-f="amount"]').value = p.amount || ""; r.querySelector('[data-f="category"]').value = p.category || "groceries"; r.querySelector('[data-f="months"]').value = p.months || ""; });
 }
 function renderNbcSearch() {
   const q = $("#nbc_cardsearch").value.toLowerCase().trim();
@@ -793,6 +860,7 @@ $("#nbcForm").onsubmit = async (e) => {
   $("#nbcResult").innerHTML = '<div class="panel" style="margin-top:16px"><div class="skel" style="width:45%"></div><div class="skel" style="width:75%;margin-top:10px"></div><div class="skel" style="width:60%;margin-top:10px"></div></div>';
   const recs = await api("/api/recommend", { input, options: { rankBy } });
   renderRecos(recs, rankBy, spend.length === 0);
+  store.saveProfile(gatherNbcAnswers());
 };
 function renderRecos(recs, rankBy, noSpend) {
   const el = $("#nbcResult"); el.innerHTML = "";
@@ -925,6 +993,7 @@ document.querySelectorAll(".auth-tab").forEach((t) => t.onclick = () => {
 $("#authForm").onsubmit = async (e) => {
   e.preventDefault();
   $("#au_err").textContent = "";
+  $("#au_err").style.color = "";
   $("#au_submit").disabled = true;
   const u = $("#au_user").value, p = $("#au_pass").value;
   try {
@@ -942,6 +1011,36 @@ document.querySelectorAll("[data-tc]").forEach((el) => el.onclick = () => $("#tc
 $("#tcClose").onclick = () => $("#tcModal").classList.add("hidden");
 $("#tcModal").onclick = (e) => { if (e.target.id === "tcModal") $("#tcModal").classList.add("hidden"); };
 
+/* ---------- account centre + password reset ---------- */
+async function refreshAcctSaved() {
+  try { const [prof, engs] = await Promise.all([store.loadProfile(), store.list()]); $("#acctSaved").textContent = `${prof ? "Survey saved" : "No survey saved yet"} · ${engs.length} saved ${engs.length === 1 ? "trip" : "trips"}.`; } catch { $("#acctSaved").textContent = ""; }
+}
+function openAcct() { $("#acctEmail").textContent = currentUser || ""; $("#acctMsg").textContent = ""; $("#acctModal").classList.remove("hidden"); refreshAcctSaved(); }
+function openPwReset() { $("#appShell").classList.add("hidden"); $("#auth").classList.remove("hidden"); $("#pwModal").classList.remove("hidden"); }
+$("#userChip").onclick = openAcct;
+$("#acctClose").onclick = () => $("#acctModal").classList.add("hidden");
+$("#acctModal").onclick = (e) => { if (e.target.id === "acctModal") $("#acctModal").classList.add("hidden"); };
+$("#acctSignout").onclick = () => auth.logout();
+$("#acctClear").onclick = async () => {
+  if (!confirm("Delete your saved survey and trips? This cannot be undone.")) return;
+  $("#acctMsg").textContent = "Deleting...";
+  try { await store.clearMine(); nbcHeld = new Set(); nbcTravel = new Set(); nextcardInited = false; $("#acctMsg").textContent = "Your saved data was deleted."; setTimeout(() => location.reload(), 900); }
+  catch (e) { $("#acctMsg").textContent = e.message; }
+};
+$("#au_forgotlink").onclick = async () => {
+  const email = $("#au_user").value.trim();
+  $("#au_err").style.color = "";
+  if (!email) { $("#au_err").textContent = "Enter your email above first, then click Forgot password."; return; }
+  try { await initBackend(); const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname }); if (error) throw error; $("#au_err").style.color = "var(--muted)"; $("#au_err").textContent = "If an account exists for that email, a reset link is on its way."; }
+  catch (e) { $("#au_err").style.color = ""; $("#au_err").textContent = e.message; }
+};
+$("#pw_save").onclick = async () => {
+  const p = $("#pw_new").value; $("#pw_err").textContent = "";
+  if (p.length < 6) { $("#pw_err").textContent = "Password must be at least 6 characters."; return; }
+  try { await initBackend(); const { data, error } = await sb.auth.updateUser({ password: p }); if (error) throw error; $("#pwModal").classList.add("hidden"); if (history.replaceState) history.replaceState(null, "", location.pathname); startSession(data.user.email); }
+  catch (e) { $("#pw_err").textContent = e.message; }
+};
+
 /* ---------- adapt the sign-in screen to the backend, then restore any existing session ---------- */
 (async () => {
   if (USE_SUPABASE) {
@@ -949,7 +1048,14 @@ $("#tcModal").onclick = (e) => { if (e.target.id === "tcModal") $("#tcModal").cl
     $("#au_user").type = "email";
     $("#au_user").setAttribute("autocomplete", "email");
     $("#au_note").textContent = "Accounts are stored in your Supabase project with server-side password security, and follow you to any device you sign in from.";
-    try { await initBackend(); const { data } = await sb.auth.getSession(); if (data.session) { startSession(data.session.user.email); return; } } catch {}
+    $("#au_forgot").classList.remove("hidden");
+    try {
+      await initBackend();
+      sb.auth.onAuthStateChange((event) => { if (event === "PASSWORD_RECOVERY") openPwReset(); });
+      if (location.hash.includes("type=recovery")) { openPwReset(); return; }
+      const { data } = await sb.auth.getSession();
+      if (data.session) { startSession(data.session.user.email); return; }
+    } catch {}
   } else {
     const sess = sessionStorage.getItem("upfront.session");
     if (sess && getUsers()[sess.toLowerCase()]) { startSession(getUsers()[sess.toLowerCase()].username); return; }
