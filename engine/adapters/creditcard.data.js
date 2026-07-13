@@ -141,7 +141,7 @@ export default {
             "windowMonths": 3
           },
           {
-            "amount": 80000,
+            "amount": 40000,
             "minSpendCents": 4500000,
             "windowMonths": 12
           }
@@ -199,7 +199,7 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 45000,
+            "amount": 35000,
             "minSpendCents": 750000,
             "windowMonths": 6
           }
@@ -247,7 +247,7 @@ export default {
             "windowMonths": 3
           },
           {
-            "amount": 80000,
+            "amount": 40000,
             "minSpendCents": 4500000,
             "windowMonths": 12
           }
@@ -820,6 +820,11 @@ export default {
             "amount": 25000,
             "minSpendCents": 600000,
             "windowMonths": 4
+          },
+          {
+            "amount": 30000,
+            "minSpendCents": 2500000,
+            "windowMonths": 12
           }
         ],
         "eligibilityRule": "none"
@@ -1087,7 +1092,7 @@ export default {
             "windowMonths": 1
           },
           {
-            "amount": 35000,
+            "amount": 20000,
             "minSpendCents": 500000,
             "windowMonths": 6
           }
@@ -1156,6 +1161,11 @@ export default {
             "amount": 35000,
             "minSpendCents": 100,
             "windowMonths": 1
+          },
+          {
+            "amount": 20000,
+            "minSpendCents": 500000,
+            "windowMonths": 6
           }
         ],
         "eligibilityRule": "none"
@@ -1282,9 +1292,14 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 14000,
+            "amount": 7000,
             "minSpendCents": 100,
             "windowMonths": 1
+          },
+          {
+            "amount": 14000,
+            "minSpendCents": 150000,
+            "windowMonths": 6
           }
         ],
         "eligibilityRule": "none"
@@ -1382,12 +1397,12 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 25000,
+            "amount": 30000,
             "minSpendCents": 100,
             "windowMonths": 1
           },
           {
-            "amount": 20000,
+            "amount": 30000,
             "minSpendCents": 500000,
             "windowMonths": 3
           }
@@ -1428,9 +1443,14 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 10000,
+            "amount": 5000,
             "minSpendCents": 100,
             "windowMonths": 1
+          },
+          {
+            "amount": 10000,
+            "minSpendCents": 100000,
+            "windowMonths": 3
           }
         ],
         "eligibilityRule": "none"
@@ -1451,7 +1471,10 @@ export default {
       "earnRules": [
         {
           "category": "groceries",
-          "multiplier": 2
+          "multiplier": 2,
+          "monthlyCapSpendCents": 600000,
+          "capPeriod": "annual",
+          "capOverflowMultiplier": 1
         },
         {
           "category": "everything_else",
@@ -2048,9 +2071,14 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 80000,
+            "amount": 30000,
             "minSpendCents": 300000,
             "windowMonths": 3
+          },
+          {
+            "amount": 30000,
+            "minSpendCents": 2000000,
+            "windowMonths": 6
           }
         ],
         "eligibilityRule": "none"
@@ -2237,7 +2265,12 @@ export default {
       "welcomeBonus": {
         "tiers": [
           {
-            "amount": 10000,
+            "amount": 2500,
+            "minSpendCents": 25000,
+            "windowMonths": 3
+          },
+          {
+            "amount": 7500,
             "minSpendCents": 100000,
             "windowMonths": 3
           }
