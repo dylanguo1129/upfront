@@ -10,7 +10,7 @@
 :root{
   --paper:#FCFBF9;--ink:#191815;--body:#48463F;--muted:#8C887E;--line:#E9E6DD;
   --dark:#15140F;--accent:#2540DB;--accent-soft:#EEF0FD;--tint:#F4F2EC;
-  --pos:#1C6E4A;--warn:#9A6B16;--warn-soft:#F6EFDD;--neg:#B23B2E;--neg-soft:#F7E7E4;
+  --pos:#1C6E4A;--pos-soft:#E5F2EC;--warn:#9A6B16;--warn-soft:#F6EFDD;--neg:#B23B2E;--neg-soft:#F7E7E4;
   --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box;margin:0}
@@ -30,154 +30,10 @@ a{color:inherit;text-decoration:none}
 .auth-tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
 .auth-err{color:var(--neg);font-size:12.5px;margin-top:10px;min-height:15px}
 .auth-note{color:var(--muted);font-size:11px;line-height:1.55;margin-top:16px;text-align:center}
-
-/* nav */
-nav{position:sticky;top:0;z-index:40;background:rgba(252,251,249,.86);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
-.nav-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:8px;height:62px;padding:0 22px}
-.brand{font-family:'Space Grotesk';font-weight:700;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:14px}
-.brand .mk{width:24px;height:24px;border-radius:6px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
-.tabs{display:flex;gap:2px}
-.tab{font-size:14px;font-weight:500;color:var(--body);padding:8px 14px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s}
-.tab:hover{background:var(--tint)}
-.tab.on{background:var(--ink);color:var(--paper)}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.chip{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;display:flex;align-items:center;gap:6px}
-.chip .dot{width:6px;height:6px;border-radius:99px;background:var(--warn)}
-.chip.user{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft);cursor:pointer}
-.chip.user:hover{background:#E2E6FB}
-.nav-right a.site{font-size:13px;color:var(--muted);cursor:pointer}
-.nav-right a.site:hover{color:var(--ink)}
-@media(max-width:720px){.brand span.t{display:none}.tab{padding:8px 10px}#modeChip{display:none}}
-
-main{max-width:1120px;margin:0 auto;padding:38px 22px 90px}
-.head h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(26px,3.4vw,36px);letter-spacing:-0.02em;color:var(--ink);line-height:1.06}
-.head .sub{font-size:15.5px;color:var(--body);margin-top:8px;max-width:62ch}
-.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
-.kick{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-
-/* forms */
-label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:.01em}
-input,select{width:100%;font:inherit;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;transition:border-color .15s}
-input:focus,select:focus{outline:none;border-color:var(--accent)}
-.seg{display:flex;border:1px solid var(--line);border-radius:11px;overflow:hidden}
-.seg button{flex:1;font:inherit;font-size:13.5px;font-weight:500;background:#fff;border:0;border-right:1px solid var(--line);padding:11px 4px;cursor:pointer;color:var(--body);transition:background .15s,color .15s}
-.seg button:last-child{border-right:0}
-.seg button.on{background:var(--ink);color:#fff;font-weight:600}
-.form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;align-items:end}
-.btn{font:inherit;font-weight:600;font-size:14.5px;border:1px solid transparent;border-radius:11px;padding:12px 20px;cursor:pointer;transition:transform .14s var(--ease),background .2s}
-.btn:active{transform:translateY(1px)}
-.btn-primary{background:var(--ink);color:var(--paper)}
-.btn-primary:hover{background:#000}
-.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
-.btn-ghost.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.mini{font:inherit;font-size:12.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border:0;border-radius:8px;padding:6px 11px;cursor:pointer;transition:background .15s}
-.mini:hover{background:#E2E6FB}
-
-/* meta + sort */
-.meta-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 12px;flex-wrap:wrap}
-.meta-row .n{font-family:'Space Grotesk';font-weight:600;color:var(--ink);font-size:15px}
-.sorts{display:flex;gap:6px}
-.sorts button{font:inherit;font-size:12.5px;font-weight:500;color:var(--body);background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer}
-.sorts button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-
-/* award option cards */
-.opt{display:grid;grid-template-columns:1fr auto auto;gap:22px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px;transition:border-color .15s}
-.opt:hover{border-color:#D8D4C8}
-.opt.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.opt .routing{font-family:'Space Grotesk';font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-0.01em}
-.opt .carrier{font-size:13px;color:var(--body);margin-top:3px}
-.opt .note{font-size:12.5px;color:var(--muted);margin-top:7px;max-width:46ch}
-.opt .prog{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.02em;text-transform:uppercase;margin-bottom:5px}
-.opt .miles{font-family:'Space Grotesk';font-weight:700;font-size:20px;color:var(--ink)}
-.opt .miles span{font-family:Inter;font-weight:400;font-size:12px;color:var(--muted);margin-left:4px}
-.opt .taxes{font-size:12.5px;color:var(--body);margin-top:3px}
-.opt-score{text-align:right;min-width:160px}
-.badge{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:5px 11px;letter-spacing:.01em}
-.badge-top{background:var(--accent);color:#fff}
-.badge-strong{background:var(--accent-soft);color:var(--accent)}
-.badge-fair{background:var(--tint);color:var(--body)}
-.badge-soft{background:var(--warn-soft);color:var(--warn)}
-.opt .value{font-size:13.5px;color:var(--ink);font-weight:600;margin-top:9px}
-.opt .value span{display:block;font-weight:400;color:var(--muted);font-size:11.5px}
-.opt .cpp{font-family:'Space Grotesk';font-size:12.5px;color:var(--body);margin-top:4px}
-.opt-score .mini{margin-top:10px}
-.notbook{color:var(--warn);font-weight:600}
-@media(max-width:760px){.opt{grid-template-columns:1fr;gap:12px}.opt-score{text-align:left}.form-grid>*{grid-column:span 12!important}}
-
-/* earn plan result */
-.earn-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px}
-.earn-summary .cell{background:#fff;padding:18px}
-.earn-summary .big{font-family:'Space Grotesk';font-weight:700;font-size:26px;color:var(--ink)}
-.earn-summary .lab{font-size:12px;color:var(--muted);margin-top:4px}
-.earn-summary .big.good{color:var(--pos)}
-.cardrow{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 18px;margin-bottom:10px}
-.cardrow .nm{font-family:'Space Grotesk';font-weight:600;font-size:16px;color:var(--ink)}
-.cardrow .nt{font-size:12.5px;color:var(--muted);margin-top:6px;max-width:60ch}
-.cardrow .rt{text-align:right;min-width:130px}
-.cardrow .rt .pts{font-family:'Space Grotesk';font-weight:700;font-size:19px;color:var(--accent)}
-.cardrow .rt .fee{font-size:12px;color:var(--body);margin-top:3px}
-@media(max-width:680px){.earn-summary{grid-template-columns:repeat(2,1fr)}.cardrow{flex-direction:column}.cardrow .rt{text-align:left}}
-
-/* catalog */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.fchip{font-size:12.5px;font-weight:500;color:var(--body);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
-.fchip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.ccard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:9px}
-.ccard h3{font-family:'Space Grotesk';font-weight:600;font-size:16px;color:var(--ink);line-height:1.2}
-.ccard .meta{font-size:12px;color:var(--muted)}
-.ccard .cur{display:inline-block;font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:3px 9px;width:fit-content}
-.ccard .earn{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
-.ccard .earn span{font-size:11.5px;color:var(--body);background:var(--tint);border-radius:6px;padding:3px 8px}
-.ccard .fee{font-size:12.5px;color:var(--body);margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
-.ccard .fee b{font-family:'Space Grotesk';color:var(--ink)}
-.ccard .wb{font-size:12.5px;color:var(--pos);font-weight:500}
-
-/* transfers */
-.tgraph{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:18px}
-.tnode{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
-.tnode h3{font-family:'Space Grotesk';font-weight:600;font-size:15px;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
-.tnode h3 .cpp{font-size:11.5px;font-weight:500;color:var(--muted)}
-.tedge{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:9px 0;border-top:1px solid var(--line)}
-.tedge:first-of-type{border-top:0;margin-top:8px}
-.tedge .to{color:var(--ink);font-weight:500}
-.tedge .ratio{font-family:'Space Grotesk';font-weight:600;color:var(--accent)}
-
-/* plan / orchestration */
-.plan-grid{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
-.eng-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.eng{display:flex;flex-direction:column;gap:3px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;transition:.15s}
-.eng:hover{border-color:#D8D4C8}
-.eng.go{border-left-color:var(--pos)}.eng.nogo{border-left-color:var(--neg)}
-.eng .r{font-family:'Space Grotesk';font-weight:600;font-size:13.5px;color:var(--ink)}
-.eng .v{font-size:12px;color:var(--muted)}
-.verdict{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-weight:700;font-size:14px;border-radius:999px;padding:7px 15px}
-.verdict.go{background:#E5F2EC;color:var(--pos)}.verdict.nogo{background:var(--neg-soft);color:var(--neg)}
-.hero-val{font-family:'Space Grotesk';font-weight:700;font-size:48px;color:var(--ink);letter-spacing:-0.03em;margin:14px 0 2px}
-.hero-sub{font-size:13.5px;color:var(--body)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
-.box{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px}
-.box h4{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.kv{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:5px 0;border-top:1px solid var(--line)}
-.kv:first-of-type{border-top:0}
-.kv .k{color:var(--body)}.kv .v{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-.doc{background:#fff;border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin-top:16px;font-size:14px}
-.doc h1,.doc h2,.doc h3{font-family:'Space Grotesk';color:var(--ink);margin:16px 0 7px;line-height:1.2}
-.doc h1{font-size:22px}.doc h2{font-size:18px}.doc h3{font-size:15px}
-.doc p{margin:8px 0}.doc ul{margin:8px 0;padding-left:20px}.doc strong{color:var(--ink)}
-.doc hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-@media(max-width:820px){.plan-grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
-
-.skel{height:14px;background:linear-gradient(90deg,var(--tint),#fff,var(--tint));background-size:200% 100%;animation:sh 1.2s infinite;border-radius:6px}
-@keyframes sh{to{background-position:-200% 0}}
-.empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px}
-.disabled>*:not(.soon){display:none!important}
-.soon{max-width:560px;margin:56px auto;text-align:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:46px 34px}
-.soon .badge{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:6px 13px;margin-bottom:16px}
-.soon h2{font-family:'Space Grotesk';font-weight:700;font-size:23px;color:var(--ink);letter-spacing:-0.01em;margin-bottom:10px}
-.soon p{font-size:15px;color:var(--body);max-width:46ch;margin:0 auto;line-height:1.6}
-.tc-link{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .auth-agree{font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.5}
+.tc-link{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+
+/* modals */
 .modal{position:fixed;inset:0;z-index:200;background:rgba(21,20,15,.55);display:flex;align-items:center;justify-content:center;padding:20px}
 .modal-card{background:#fff;border:1px solid var(--line);border-radius:18px;max-width:640px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 30px 80px -40px rgba(0,0,0,.4)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--line);flex-shrink:0}
@@ -187,9 +43,51 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .modal-body h3{font-family:'Space Grotesk';font-weight:600;font-size:14.5px;color:var(--ink);margin:18px 0 6px}
 .modal-body p{margin:0 0 10px}.modal-body ul{margin:0 0 10px;padding-left:20px}.modal-body li{margin:4px 0}
 .modal-body strong{color:var(--ink)}
-/* next best card survey */
-.nbc-sec{margin-bottom:18px}
+.acct-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;color:var(--body)}
+.acct-row b{color:var(--ink);font-weight:600}
+.acct-saved{font-size:12.5px;color:var(--muted);margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.acct-danger{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--neg-soft);border-radius:11px;padding:12px 20px;background:var(--neg-soft);color:var(--neg);cursor:pointer;transition:background .15s}
+.acct-danger:hover{background:#F2D9D5}
+
+/* nav */
+nav{position:sticky;top:0;z-index:40;background:rgba(252,251,249,.86);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:8px;height:62px;padding:0 22px}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:14px}
+.brand .mk{width:24px;height:24px;border-radius:6px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.tabs{display:flex;gap:2px}
+.tab{font-size:14px;font-weight:500;color:var(--body);padding:8px 13px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap}
+.tab:hover{background:var(--tint)}
+.tab.on{background:var(--ink);color:var(--paper)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.chip{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;display:flex;align-items:center;gap:6px}
+.chip.user{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft);cursor:pointer}
+.chip.user:hover{background:#E2E6FB}
+.nav-right a.site{font-size:13px;color:var(--muted);cursor:pointer}
+.nav-right a.site:hover{color:var(--ink)}
+@media(max-width:760px){.brand span.t{display:none}.tab{padding:8px 9px;font-size:13px}#modeChip{display:none}}
+
+main{max-width:1080px;margin:0 auto;padding:38px 22px 90px}
+.head h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(26px,3.4vw,34px);letter-spacing:-0.02em;color:var(--ink);line-height:1.06;text-wrap:balance}
+.head .sub{font-size:15.5px;color:var(--body);margin-top:8px;max-width:64ch}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.kick{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* forms */
+label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px}
+input,select{width:100%;font:inherit;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 12px;transition:border-color .15s}
+input:focus,select:focus{outline:none;border-color:var(--accent)}
+input::placeholder{color:#77736A}
+.btn{font:inherit;font-weight:600;font-size:14.5px;border:1px solid transparent;border-radius:11px;padding:12px 20px;cursor:pointer;transition:transform .14s var(--ease),background .2s}
+.btn:active{transform:scale(.985)}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{background:#000}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.mini{font:inherit;font-size:12.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border:0;border-radius:8px;padding:6px 11px;cursor:pointer;transition:background .15s}
+.mini:hover{background:#E2E6FB}
 .opt{font-weight:400;color:var(--muted);font-size:11.5px;text-transform:none;letter-spacing:0}
+
+/* survey */
+.nbc-sec{margin-bottom:18px}
 .nbc-cardresults{margin-top:6px}
 .nbc-cardopt{padding:9px 12px;border:1px solid var(--line);border-top:0;font-size:13.5px;color:var(--ink);cursor:pointer;background:#fff;display:flex;justify-content:space-between;gap:10px}
 .nbc-cardopt:first-child{border-top:1px solid var(--line);border-radius:8px 8px 0 0}
@@ -204,7 +102,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .nbc-spend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 16px;margin-top:8px}
 .nbc-spendrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .nbc-spendrow>span{font-size:13.5px;color:var(--body)}
-.nbc-dollar{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding-left:10px;max-width:130px;transition:border-color .15s}
+.nbc-dollar{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding-left:10px;max-width:130px;transition:border-color .15s;background:#fff}
 .nbc-dollar:focus-within{border-color:var(--accent)}
 .nbc-dollar>span{color:var(--muted);font-size:14px}
 .nbc-dollar input{border:0;padding:9px 10px 9px 4px}
@@ -213,28 +111,103 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 .nbc-rm{border:0;background:var(--tint);border-radius:8px;width:32px;height:32px;cursor:pointer;color:var(--body);font-size:15px}
 .nbc-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .nbc-chips-select{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.fchip{font-size:12.5px;font-weight:500;color:var(--body);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
+.fchip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+details.fold{border:1px solid var(--line);border-radius:11px;background:#fff;margin-top:10px}
+details.fold summary{font-size:13px;font-weight:600;color:var(--ink);padding:11px 14px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.fold summary::after{content:"+";color:var(--muted);font-size:16px}
+details.fold[open] summary::after{content:"\2212"}
+details.fold .fold-in{padding:0 14px 14px}
+
+/* results */
+.explain{font-size:13px;color:var(--body);background:var(--accent-soft);border:1px solid #DDE3FA;border-radius:11px;padding:11px 14px;margin:16px 0 12px;max-width:none}
+.explain b{color:var(--ink)}
+.banner{font-size:13px;color:var(--body);background:var(--warn-soft);border:1px solid #EADFC2;border-radius:11px;padding:12px 14px;margin:0 0 12px}
+.banner b{color:var(--ink)}
+.banner ul{margin:6px 0 0;padding-left:18px}
+.banner li{margin:3px 0}
 .nbc-rec{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
-.nbc-rec:first-of-type{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.nbc-rec.top{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .nbc-rec-rank{font-family:'Space Grotesk';font-weight:700;font-size:19px;color:var(--accent);background:var(--accent-soft);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center}
 .nbc-rec-name{font-family:'Space Grotesk';font-weight:600;font-size:17px;color:var(--ink)}
 .nbc-rec-meta{font-size:12.5px;color:var(--muted);margin-top:2px}
 .nbc-bonus{font-size:13px;color:var(--pos);margin-top:8px}
-.nbc-bonus.muted{color:var(--muted)}
+.nbc-bonus.mutedline{color:var(--muted)}
 .nbc-bonus b{font-family:'Space Grotesk'}
 .nbc-wins{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .nbc-wins span{font-size:11.5px;color:var(--body);background:var(--tint);border-radius:6px;padding:3px 8px}
 .nbc-wins b{color:var(--ink)}
 .nbc-note{font-size:12px;color:var(--muted);margin-top:8px;max-width:60ch}
-.nbc-rec-val{text-align:right;min-width:120px}
+.nbc-rec-val{text-align:right;min-width:130px}
 .nbc-rec-val .big{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--ink)}
 .nbc-rec-val .lab{font-size:11px;color:var(--muted)}
 .nbc-rec-val .alt{font-size:12px;color:var(--body);margin-top:6px}
-@media(max-width:680px){.nbc-spend{grid-template-columns:1fr}.nbc-grid4{grid-template-columns:1fr 1fr}.nbc-prow{grid-template-columns:1fr 1fr}.nbc-rec{grid-template-columns:auto 1fr}.nbc-rec-val{text-align:left;grid-column:1 / -1}}
-.acct-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13.5px;color:var(--body)}
-.acct-row b{color:var(--ink);font-weight:600}
-.acct-saved{font-size:12.5px;color:var(--muted);margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
-.acct-danger{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--neg-soft);border-radius:11px;padding:12px 20px;background:var(--neg-soft);color:var(--neg);cursor:pointer;transition:background .15s}
-.acct-danger:hover{background:#F2D9D5}
+.nbc-rec-val .mini{margin-top:10px}
+.meta-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 0 10px;flex-wrap:wrap}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--body);cursor:pointer;user-select:none}
+.switch input{width:auto;accent-color:var(--accent)}
+table.rank{width:100%;border-collapse:collapse;font-size:13px}
+table.rank th{text-align:left;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+table.rank td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--body)}
+table.rank tr:last-child td{border-bottom:0}
+table.rank td.n{font-family:'Space Grotesk';font-weight:600;color:var(--ink)}
+.tag{display:inline-block;font-size:11px;font-weight:600;border-radius:999px;padding:3px 9px}
+.tag.pick{background:var(--accent-soft);color:var(--accent)}
+.tag.hid{background:var(--warn-soft);color:var(--warn)}
+.tag.ok{background:var(--pos-soft);color:var(--pos)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.bad{background:var(--neg-soft);color:var(--neg)}
+
+/* wallet */
+.wcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.wcard .nm{font-family:'Space Grotesk';font-weight:600;font-size:16px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.wcard .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.wcard .rm{border:0;background:var(--tint);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--body);font-size:12px;font-weight:600}
+.track{display:grid;grid-template-columns:150px 150px 1fr;gap:12px;align-items:end;margin-top:12px}
+.prog{height:8px;background:var(--tint);border-radius:99px;overflow:hidden;margin-top:10px}
+.prog>div{height:100%;background:var(--accent);border-radius:99px}
+.track-line{font-size:12.5px;color:var(--body);margin-top:7px}
+.perk{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--body);padding:6px 0;border-top:1px solid var(--line)}
+.perk:first-of-type{border-top:0}
+.two-col{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;align-items:end}
+@media(max-width:680px){.nbc-spend{grid-template-columns:1fr}.nbc-grid4{grid-template-columns:1fr 1fr}.nbc-prow{grid-template-columns:1fr 1fr}.nbc-rec{grid-template-columns:auto 1fr}.nbc-rec-val{text-align:left;grid-column:1/-1}.track{grid-template-columns:1fr 1fr}.two-col>*{grid-column:span 12!important}}
+
+/* big purchase */
+.plan-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:16px 0 12px}
+.plan-sum .cell{background:#fff;padding:16px 18px}
+.plan-sum .big{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--ink)}
+.plan-sum .big.good{color:var(--pos)}
+.plan-sum .lab{font-size:12px;color:var(--muted);margin-top:3px}
+@media(max-width:680px){.plan-sum{grid-template-columns:1fr}}
+
+/* catalogue */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.ccard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:9px}
+.ccard h3{font-family:'Space Grotesk';font-weight:600;font-size:16px;color:var(--ink);line-height:1.2}
+.ccard .meta{font-size:12px;color:var(--muted)}
+.ccard .cur{display:inline-block;font-size:11.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:3px 9px;width:fit-content}
+.ccard .earn{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.ccard .earn span{font-size:11.5px;color:var(--body);background:var(--tint);border-radius:6px;padding:3px 8px}
+.ccard .fee{font-size:12.5px;color:var(--body);margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
+.ccard .fee b{font-family:'Space Grotesk';color:var(--ink)}
+.ccard .wb{font-size:12.5px;color:var(--pos);font-weight:500}
+.tgraph{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:16px}
+.tnode{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.tnode h3{font-family:'Space Grotesk';font-weight:600;font-size:15px;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
+.tnode h3 .cpp{font-size:11.5px;font-weight:500;color:var(--muted)}
+.tedge{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:9px 0;border-top:1px solid var(--line)}
+.tedge:first-of-type{border-top:0;margin-top:8px}
+.tedge .to{color:var(--ink);font-weight:500}
+.tedge .ratio{font-family:'Space Grotesk';font-weight:600;color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+.seg button{font:inherit;font-size:13px;font-weight:500;background:#fff;border:0;border-right:1px solid var(--line);padding:9px 16px;cursor:pointer;color:var(--body)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ink);color:#fff;font-weight:600}
+
+.skel{height:14px;background:linear-gradient(90deg,var(--tint),#fff,var(--tint));background-size:200% 100%;animation:sh 1.2s infinite;border-radius:6px}
+@keyframes sh{to{background-position:-200% 0}}
+.empty{text-align:center;color:var(--muted);padding:44px 20px;font-size:14px}
 .foot-note{font-size:12px;color:var(--muted);margin-top:30px;border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -245,7 +218,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 <div id="auth">
   <div class="auth-card">
     <div class="auth-brand"><span class="mk">U</span><span>Upfront</span></div>
-    <p class="auth-tag">The premium award-travel workspace</p>
+    <p class="auth-tag">Your next best credit card, by the math</p>
     <div class="auth-tabs">
       <button type="button" class="auth-tab on" data-mode="login">Sign in</button>
       <button type="button" class="auth-tab" data-mode="register">Create account</button>
@@ -264,18 +237,19 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
   </div>
 </div>
 
-<!-- ============ APP SHELL (revealed after sign in) ============ -->
+<!-- ============ APP SHELL ============ -->
 <div id="appShell" class="hidden">
 <nav>
   <div class="nav-in">
     <div class="brand"><span class="mk">U</span><span class="t">Upfront</span></div>
     <div class="tabs">
-      <div class="tab" data-view="search">Search</div>
-      <div class="tab on" data-view="cards">Cards</div>
-      <div class="tab" data-view="plan">Plan</div>
+      <div class="tab on" data-sub="nextcard">Next card</div>
+      <div class="tab" data-sub="wallet">Wallet</div>
+      <div class="tab" data-sub="bigbuy">Big purchase</div>
+      <div class="tab" data-sub="catalog">Catalogue</div>
     </div>
     <div class="nav-right">
-      <span class="chip"><span class="dot"></span><span id="modeChip">Simulated data</span></span>
+      <span class="chip" id="modeChip">70 Canadian cards</span>
       <span class="chip user" id="userChip"><span id="userName"></span></span>
       <a class="site" id="logoutBtn">Log out</a>
     </div>
@@ -283,153 +257,111 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 </nav>
 
 <main>
-  <!-- ============ SEARCH (BURN) ============ -->
-  <section id="view-search" class="hidden disabled">
-    <div class="soon">
-      <div class="badge">Coming soon</div>
-      <h2>Award search is being wired to live inventory</h2>
-      <p>We are connecting Upfront to live airline award availability. This part of the workspace is still being built. Stay tuned.</p>
-    </div>
-    <div class="head">
-      <h1>Find a premium award seat</h1>
-      <p class="sub">Search award space across alliances and programs. Every figure, miles, taxes, cash comparison and the 0 to 100 deal score, comes from the Seatwise engine. Availability is simulated, modelled on real 2026 charts.</p>
-    </div>
-    <form id="searchForm" class="panel form-grid" style="margin-top:20px">
-      <div style="grid-column:span 3"><label>From</label><input id="s_from" list="apts" value="YVR" autocomplete="off"></div>
-      <div style="grid-column:span 3"><label>To</label><input id="s_to" list="apts" value="HKG" autocomplete="off"></div>
-      <div style="grid-column:span 3"><label>Cabin</label>
-        <div class="seg" id="s_cabin">
-          <button type="button" data-v="Economy">Economy</button>
-          <button type="button" data-v="Premium economy">Prem</button>
-          <button type="button" class="on" data-v="Business">Business</button>
-          <button type="button" data-v="First">First</button>
-        </div>
-      </div>
-      <div style="grid-column:span 1"><label>Pax</label><input id="s_pax" type="number" min="1" max="9" value="2"></div>
-      <div style="grid-column:span 2"><label>Month</label><input id="s_month" type="month" value="2026-12"></div>
-      <div style="grid-column:span 12"><button class="btn btn-primary" type="submit">Search seats</button></div>
-    </form>
-    <div id="searchMeta" class="meta-row hidden">
-      <div class="n" id="searchN"></div>
-      <div class="sorts">
-        <button data-sort="score" class="on">Best deal</button>
-        <button data-sort="miles">Fewest miles</button>
-        <button data-sort="cash">Most cash saved</button>
-      </div>
-    </div>
-    <div id="searchResults"></div>
-  </section>
-
-  <!-- ============ CARDS (EARN) ============ -->
-  <section id="view-cards">
+  <!-- ============ NEXT BEST CARD ============ -->
+  <section id="sub-nextcard">
     <div class="head">
       <h1>Your next best credit card</h1>
-      <p class="sub">Enter the cards you have and how you spend, and get your next best card ranked by real net value over what you already hold. You can also browse the 70-card catalogue, plan an earn for a trip, or trace how points transfer. Commission-blind: no card pays us.</p>
+      <p class="sub">Tell us what you hold and how you spend. Every card is scored by what it adds <b>on top of your current wallet</b>: welcome bonus you can actually reach, extra earn per category, minus the fee. Commission-blind, deterministic, and fully inspectable below the results.</p>
     </div>
-    <div class="tabs" style="margin:18px 0 6px">
-      <div class="tab on" data-sub="nextcard">Next best card</div>
-      <div class="tab" data-sub="plan">Earn planner</div>
-      <div class="tab" data-sub="catalog">Card catalogue</div>
-      <div class="tab" data-sub="transfers">Transfer graph</div>
-    </div>
+    <form id="nbcForm" class="panel" style="margin-top:18px">
+      <div class="nbc-sec">
+        <label>Cards you have now <span class="opt">so we only credit what a new card adds</span></label>
+        <input id="nbc_cardsearch" placeholder="Search to add a card you hold (e.g. Cobalt, TD Aeroplan)..." autocomplete="off">
+        <div id="nbc_cardresults" class="nbc-cardresults"></div>
+        <div id="nbc_held" class="nbc-chips"></div>
+      </div>
+      <div class="nbc-sec">
+        <label>Your average monthly spend (CA$)</label>
+        <div id="nbc_spend" class="nbc-spend"></div>
+      </div>
+      <div class="nbc-sec">
+        <label>Upcoming big purchases <span class="opt">optional, helps unlock welcome bonuses</span></label>
+        <div id="nbc_purchases"></div>
+        <button type="button" class="mini" id="nbc_addpurchase" style="margin-top:8px">Add a purchase</button>
+      </div>
+      <div class="nbc-sec nbc-grid4">
+        <div><label>Annual income</label><input id="nbc_income" type="number" min="0" placeholder="optional"></div>
+        <div><label>Household income</label><input id="nbc_household" type="number" min="0" placeholder="optional"></div>
+        <div><label>Credit score</label><select id="nbc_credit"><option value="">Not sure</option><option value="fair">Fair</option><option value="good" selected>Good</option><option value="excellent">Excellent</option></select></div>
+        <div><label>Annual fees</label><select id="nbc_fees"><option value="yes" selected>Fees are fine</option><option value="no">Only fee-free or first-year waived</option></select></div>
+      </div>
+      <div class="nbc-sec nbc-grid4">
+        <div><label>New cards you open</label><select id="nbc_freq"><option value="rare">Rarely</option><option value="some" selected>Sometimes</option><option value="often">Often</option></select></div>
+        <div><label>Rank by</label><select id="nbc_rankby"><option value="firstYear" selected>First-year value</option><option value="ongoing">Ongoing value</option></select></div>
+        <div style="grid-column:span 2"><label>Where you'll redeem <span class="opt">optional, lifts how we value points</span></label><div id="nbc_travel" class="nbc-chips-select" style="margin-top:2px"></div></div>
+      </div>
+      <details class="fold" id="nbc_histfold">
+        <summary>Bonuses you've already received <span class="opt" id="nbc_histcount"></span></summary>
+        <div class="fold-in">
+          <p style="font-size:12.5px;color:var(--muted);margin:2px 0 8px">Some welcome bonuses are once per lifetime or have a cooldown. Add cards whose bonus you've received before (even if you no longer hold the card) and we'll stop counting those bonuses.</p>
+          <input id="nbc_histsearch" placeholder="Search to add a card..." autocomplete="off">
+          <div id="nbc_histresults" class="nbc-cardresults"></div>
+          <div id="nbc_hist" class="nbc-chips"></div>
+        </div>
+      </details>
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:16px">Find my next best cards</button>
+    </form>
+    <div id="nbcResult"></div>
+  </section>
 
-    <div id="sub-nextcard">
-      <form id="nbcForm" class="panel" style="margin-top:14px">
-        <div class="nbc-sec">
-          <label>Cards you have now <span class="opt">so we only credit what a new card adds</span></label>
-          <input id="nbc_cardsearch" placeholder="Search to add a card you hold (e.g. Cobalt, TD Aeroplan)..." autocomplete="off">
-          <div id="nbc_cardresults" class="nbc-cardresults"></div>
-          <div id="nbc_held" class="nbc-chips"></div>
-        </div>
-        <div class="nbc-sec">
-          <label>Your average monthly spend (CA$)</label>
-          <div id="nbc_spend" class="nbc-spend"></div>
-        </div>
-        <div class="nbc-sec">
-          <label>Upcoming big purchases <span class="opt">optional, helps unlock welcome bonuses</span></label>
-          <div id="nbc_purchases"></div>
-          <button type="button" class="mini" id="nbc_addpurchase" style="margin-top:8px">+ Add a purchase</button>
-        </div>
-        <div class="nbc-sec nbc-grid4">
-          <div><label>Annual income</label><input id="nbc_income" type="number" placeholder="optional"></div>
-          <div><label>Credit score</label><select id="nbc_credit"><option value="">Not sure</option><option value="fair">Fair</option><option value="good" selected>Good</option><option value="excellent">Excellent</option></select></div>
-          <div><label>New cards you open</label><select id="nbc_freq"><option value="rare">Rarely</option><option value="some" selected>Sometimes</option><option value="often">Often</option></select></div>
-          <div><label>Rank by</label><select id="nbc_rankby"><option value="firstYear" selected>First-year value</option><option value="ongoing">Ongoing value</option></select></div>
-        </div>
-        <div class="nbc-sec">
-          <label>Where you'll redeem <span class="opt">optional, lifts how we value points</span></label>
-          <div id="nbc_travel" class="nbc-chips-select"></div>
-        </div>
-        <button class="btn btn-primary" type="submit" style="width:100%">Find my next best cards</button>
-      </form>
-      <div id="nbcResult"></div>
+  <!-- ============ WALLET ============ -->
+  <section id="sub-wallet" class="hidden">
+    <div class="head">
+      <h1>My wallet</h1>
+      <p class="sub">The cards you hold, which one to pull out for any purchase, and where each welcome bonus stands.</p>
     </div>
-
-    <div id="sub-plan" class="hidden">
-      <form id="earnForm" class="panel form-grid" style="margin-top:14px">
-        <div style="grid-column:span 4"><label>Target program</label><select id="e_program"></select></div>
-        <div style="grid-column:span 2"><label>Points needed</label><input id="e_points" type="number" value="182000"></div>
-        <div style="grid-column:span 2"><label>Deadline (months)</label><input id="e_deadline" type="number" value="6"></div>
-        <div style="grid-column:span 2"><label>Monthly spend (CA$)</label><input id="e_spend" type="number" value="4500"></div>
-        <div style="grid-column:span 2"><label>Income band</label><input id="e_income" value="100-140k CAD"></div>
-        <div style="grid-column:span 8"><label>Cards you already hold (comma separated)</label><input id="e_held" placeholder="leave blank if none"></div>
-        <div style="grid-column:span 4"><button class="btn btn-primary" type="submit" style="width:100%">Build earn plan</button></div>
-      </form>
-      <div id="earnResult"></div>
+    <div class="panel" style="margin-top:18px">
+      <label>Add a card you hold</label>
+      <input id="w_cardsearch" placeholder="Search the catalogue..." autocomplete="off">
+      <div id="w_cardresults" class="nbc-cardresults"></div>
     </div>
+    <div class="panel" style="margin-top:14px">
+      <label>Which card should I use?</label>
+      <div class="two-col" style="margin-top:6px">
+        <div style="grid-column:span 5"><select id="w_cat"></select></div>
+        <div style="grid-column:span 3"><div class="nbc-dollar" style="max-width:none"><span>$</span><input id="w_amt" type="number" min="0" value="100" aria-label="Purchase amount"></div></div>
+        <div style="grid-column:span 4"><button type="button" class="btn btn-ghost" id="w_rankbtn" style="width:100%">Rank my cards</button></div>
+      </div>
+      <div id="w_rankout" style="margin-top:12px"></div>
+    </div>
+    <div id="w_list" style="margin-top:14px"></div>
+  </section>
 
-    <div id="sub-catalog" class="hidden">
-      <div style="margin-top:14px"><input id="catSearch" placeholder="Search 70 cards by name or issuer..."></div>
+  <!-- ============ BIG PURCHASE ============ -->
+  <section id="sub-bigbuy" class="hidden">
+    <div class="head">
+      <h1>One big purchase, planned properly</h1>
+      <p class="sub">A renovation, a move, tuition. Instead of putting it all on one card, split it across new cards to stack welcome bonuses, with an honest read on the credit impact.</p>
+    </div>
+    <form id="bbForm" class="panel two-col" style="margin-top:18px">
+      <div style="grid-column:span 3"><label>Amount (CA$)</label><input id="bb_amt" type="number" min="100" value="8000"></div>
+      <div style="grid-column:span 4"><label>Category</label><select id="bb_cat"></select></div>
+      <div style="grid-column:span 2"><label>Max new cards</label><select id="bb_max"><option value="">Auto (credit-aware)</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <div style="grid-column:span 3"><button class="btn btn-primary" type="submit" style="width:100%">Plan the purchase</button></div>
+    </form>
+    <div id="bbResult"></div>
+  </section>
+
+  <!-- ============ CATALOGUE ============ -->
+  <section id="sub-catalog" class="hidden">
+    <div class="head">
+      <h1>The catalogue</h1>
+      <p class="sub">All 70 Canadian cards the engine ranks from, refreshed weekly from issuer pages, and the transfer routes that turn bank points into airline miles.</p>
+    </div>
+    <div class="meta-row" style="margin-top:16px">
+      <div class="seg" id="cat_seg"><button type="button" class="on" data-c="cards">Cards</button><button type="button" data-c="transfers">Transfer routes</button></div>
+      <input id="catSearch" placeholder="Search by name or issuer..." style="max-width:280px">
+    </div>
+    <div id="cat_cards">
       <div class="filters" id="catFilters"></div>
       <div class="catalog" id="catGrid"></div>
     </div>
-
-    <div id="sub-transfers" class="hidden">
-      <p class="sub" style="margin-top:14px">Bank and card points only become flights once they transfer into an airline program. These are the live transfer routes the engine uses to fund an award.</p>
-      <div class="tgraph" id="tGraph"></div>
-    </div>
-  </section>
-
-  <!-- ============ PLAN (orchestration) ============ -->
-  <section id="view-plan" class="hidden disabled">
-    <div class="soon">
-      <div class="badge">Coming soon</div>
-      <h2>The full earn-to-burn engagement is on the way</h2>
-      <p>Once live award inventory is connected, this runs a complete trip plan end to end. For now, use Cards to plan your points. Stay tuned.</p>
-    </div>
-    <div class="head">
-      <h1>Run a full engagement</h1>
-      <p class="sub">The earn-to-burn pipeline end to end: it picks the best bookable, fundable award, back-solves the card plan, prices the value, and clears an adversarial GO / NO-GO gate against your floor.</p>
-    </div>
-    <div class="plan-grid" style="margin-top:20px">
-      <div>
-        <form id="runForm" class="panel">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div style="grid-column:span 2"><label>Client name</label><input id="p_name" value="Priya Patel"></div>
-            <div><label>Home airport</label><input id="p_home" value="YVR"></div>
-            <div><label>Cabin</label><input id="p_cabin" value="Business"></div>
-            <div><label>From</label><input id="p_from" list="apts" value="YVR"></div>
-            <div><label>To</label><input id="p_to" list="apts" value="HKG"></div>
-            <div><label>Pax</label><input id="p_pax" type="number" value="2"></div>
-            <div><label>Month</label><input id="p_month" type="month" value="2026-12"></div>
-            <div><label>Deadline (mo)</label><input id="p_deadline" type="number" value="6"></div>
-            <div><label>Monthly spend</label><input id="p_spend" type="number" value="4500"></div>
-            <div style="grid-column:span 2"><label>Value floor (CA$)</label><input id="p_floor" type="number" value="4000"></div>
-            <div style="grid-column:span 2"><label>Cards held</label><input id="p_held" placeholder="comma separated, optional"></div>
-          </div>
-          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px">Run engagement</button>
-        </form>
-        <div class="kick" style="margin-top:22px">Engagements</div>
-        <div class="eng-list" id="engList"></div>
-      </div>
-      <div id="runResult"><div class="empty">Run an engagement, or pick one on the left.</div></div>
-    </div>
+    <div id="cat_transfers" class="hidden"><div class="tgraph" id="tGraph"></div></div>
   </section>
 
   <div class="foot-note" id="footNote"></div>
   <div style="font-size:12px;color:var(--muted);margin-top:10px"><span class="tc-link" data-tc>Terms &amp; Conditions</span></div>
 </main>
-<datalist id="apts"></datalist>
 </div>
 
 <div id="tcModal" class="modal hidden">
@@ -438,9 +370,9 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
     <div class="modal-body">
       <p style="color:var(--muted)">Last updated 6 July 2026. By creating an account or using Upfront, you agree to these terms.</p>
       <h3>1. What Upfront is</h3>
-      <p>Upfront is an early-stage tool for exploring Canadian credit-card recommendations and premium-cabin award travel. It is provided <strong>"as is"</strong>, for general information only, and is <strong>not</strong> financial, travel, tax, or legal advice. Card offers and award availability shown may be out of date or simulated; always confirm with the card issuer or airline before you act.</p>
+      <p>Upfront is an early-stage tool for exploring Canadian credit-card recommendations. It is provided <strong>"as is"</strong>, for general information only, and is <strong>not</strong> financial, tax, or legal advice. Card offers change often and may be out of date; always confirm details with the card issuer before you apply.</p>
       <h3>2. Your account and data</h3>
-      <p>To use the workspace you create an account with an email address and a password. Passwords are hashed by our authentication provider using industry-standard methods and are <strong>never stored in plain text</strong>. We store your email address and the trip plans you choose to save. Data is sent over an encrypted (HTTPS) connection, and each account can only access its own data.</p>
+      <p>To use the workspace you create an account with an email address and a password. Passwords are hashed by our authentication provider using industry-standard methods and are <strong>never stored in plain text</strong>. We store your email address and the survey answers you choose to save. Data is sent over an encrypted (HTTPS) connection, and each account can only access its own data.</p>
       <h3>3. Security, and why you must not enter sensitive information</h3>
       <p>We take reasonable measures to protect your account, but <strong>no website or online service can be guaranteed to be 100% secure.</strong> You use Upfront at your own risk. Do <strong>not</strong> enter sensitive personal or financial information into Upfront. In particular, never enter:</p>
       <ul>
@@ -466,7 +398,7 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
     <div class="modal-head"><h2>Account</h2><button class="modal-close" id="acctClose" aria-label="Close">&times;</button></div>
     <div class="modal-body">
       <div class="acct-row"><span>Signed in as</span><b id="acctEmail"></b></div>
-      <p style="color:var(--muted);font-size:12.5px;margin-top:10px;line-height:1.55">Your survey answers and saved trips are stored in your account and follow you to any device you sign in from.</p>
+      <p style="color:var(--muted);font-size:12.5px;margin-top:10px;line-height:1.55">Your survey answers and wallet are stored in your account and follow you to any device you sign in from.</p>
       <div id="acctSaved" class="acct-saved"></div>
       <button type="button" class="btn btn-ghost" id="acctSignout" style="width:100%;margin-top:18px">Sign out</button>
       <button type="button" id="acctClear" class="acct-danger" style="width:100%;margin-top:8px">Delete my saved data</button>
@@ -489,10 +421,9 @@ input:focus,select:focus{outline:none;border-color:var(--accent)}
 </div>
 
 <script type="module">
-import { searchAward, recommendEarnPlan, fundableProgramNames, recommendCards, newCaseFile, runPipeline, getCatalog, getAirports, getPrograms, getStatus } from "./engine/index.js";
+import { recommendCards, rankWallet, planPurchase, trackBonus, perkReminders, getCard, getCatalog, getStatus } from "./engine/index.js";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-// Backend: cross-device accounts via Supabase when configured, else on-device localStorage.
 const USE_SUPABASE = !!(SUPABASE_URL && SUPABASE_ANON_KEY);
 let sb = null;
 async function initBackend(){ if (USE_SUPABASE && !sb){ const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"); sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } }
@@ -501,7 +432,7 @@ const $ = (s) => document.querySelector(s);
 const ce = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
 const nf = (n) => Number(n || 0).toLocaleString("en-CA");
 const ca = (n) => "CA$" + nf(Math.round(n));
-const slug = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 /* ---------- accounts: Supabase (cross-device) when configured, else local PBKDF2 ---------- */
 const USERS_KEY = "upfront.users.v1";
@@ -533,14 +464,14 @@ async function localLogin(username, password) {
   if (!rec) throw new Error("No account with that username. Create one first.");
   const hash = await pbkdf2(password, fromB64(rec.salt), rec.iterations);
   let ok = hash.length === rec.hash.length;
-  for (let i = 0; i < hash.length; i++) ok = ok && hash[i] === rec.hash[i]; // length-safe compare
+  for (let i = 0; i < hash.length; i++) ok = ok && hash[i] === rec.hash[i];
   if (!ok) throw new Error("Incorrect password.");
   return rec.username;
 }
 async function sbRegister(email, password) {
   const { data, error } = await sb.auth.signUp({ email: email.trim(), password });
   if (error) throw new Error(error.message);
-  if (!data.session) throw new Error("Account created. Confirm via the email we sent, then sign in. (Tip: disable 'Confirm email' in Supabase Auth settings for instant sign-in.)");
+  if (!data.session) throw new Error("Account created. Confirm via the email we sent, then sign in.");
   return data.user.email;
 }
 async function sbLogin(email, password) {
@@ -562,30 +493,9 @@ function startSession(username) {
   initApp();
 }
 
-/* ---------- per-user engagement storage (Supabase table when configured, else localStorage) ---------- */
+/* ---------- per-user storage (Supabase profiles table when configured, else localStorage) ---------- */
 const engKey = () => "upfront.eng." + (currentUser || "anon");
-const getEng = () => { try { return JSON.parse(localStorage.getItem(engKey())) || {}; } catch { return {}; } };
-const setEng = (m) => localStorage.setItem(engKey(), JSON.stringify(m));
-const summarize = (cf) => ({ id: cf.id, status: cf.status, verdict: cf.realityCheck?.verdict, value: cf.value?.valueDelivered, route: cf.request ? `${cf.request.from}-${cf.request.to}` : "", cabin: cf.request?.cabin, name: cf.client?.name });
 const store = {
-  async save(cf) {
-    if (USE_SUPABASE) {
-      const { data: u } = await sb.auth.getUser();
-      await sb.from("engagements").upsert({ user_id: u.user.id, eng_id: cf.id, data: cf, value: cf.value?.valueDelivered ?? null }, { onConflict: "user_id,eng_id" });
-    } else { const m = getEng(); m[cf.id] = cf; setEng(m); }
-  },
-  async list() {
-    if (USE_SUPABASE) {
-      const { data, error } = await sb.from("engagements").select("data");
-      if (error || !data) return [];
-      return data.map((r) => summarize(r.data)).sort((a, b) => (b.value || 0) - (a.value || 0));
-    }
-    return Object.values(getEng()).map(summarize).sort((a, b) => (b.value || 0) - (a.value || 0));
-  },
-  async get(id) {
-    if (USE_SUPABASE) { const { data } = await sb.from("engagements").select("data").eq("eng_id", id).maybeSingle(); return data?.data || null; }
-    return getEng()[id] || null;
-  },
   async saveProfile(answers) {
     if (USE_SUPABASE) { const { data: u } = await sb.auth.getUser(); if (u?.user) await sb.from("profiles").upsert({ user_id: u.user.id, answers, updated_at: new Date().toISOString() }); }
     else localStorage.setItem("upfront.profile." + (currentUser || "anon"), JSON.stringify(answers));
@@ -600,157 +510,301 @@ const store = {
   },
 };
 
-/* ---------- api shim: same call sites as the server build, now backed by the in-browser engine ---------- */
-async function api(path, body) {
-  if (path === "/api/search") return searchAward(body);
-  if (path === "/api/earn") return recommendEarnPlan(body.profile || {}, body.target || {});
-  if (path === "/api/recommend") return recommendCards(body.input || {}, body.options || {});
-  if (path === "/api/programs") return getPrograms();
-  if (path === "/api/catalog") return getCatalog();
-  if (path === "/api/airports") return getAirports();
-  if (path === "/api/status") return getStatus();
-  if (path === "/api/run") {
-    const intake = body;
-    intake.id = intake.id || `eng-${slug(intake.client?.name) || "client"}-${slug(intake.request?.from)}-${slug(intake.request?.to)}`;
-    const cf = await runPipeline(newCaseFile(intake), { autoApprove: true });
-    await store.save(cf);
-    return cf;
+/* ---------- shared survey state ---------- */
+const CATEGORY_LABELS = { groceries: "Groceries", dining: "Dining out", gas: "Gas", travel: "Travel", transit: "Transit", drugstore: "Drugstore", recurring: "Bills & subscriptions", entertainment: "Entertainment", foreign: "Foreign purchases", everything_else: "Everything else" };
+const SPEND_ORDER = ["groceries", "dining", "gas", "travel", "transit", "recurring", "entertainment", "drugstore", "foreign", "everything_else"];
+const REGION_LABELS = { general: "General / flexible", domestic: "Within Canada", north_america: "North America", europe: "Europe", asia: "Asia", latam: "Latin America" };
+const catalog = getCatalog();
+const curById = Object.fromEntries(catalog.currencies.map((c) => [c.id, c]));
+const curName = (id) => curById[id]?.name || id;
+let nbcHeld = new Set(), nbcHist = new Set(), nbcTravel = new Set(), tracking = {};
+let lastRecs = null, lastInput = null, lastOptions = null, saveTimer = null;
+
+function buildInput() {
+  const spend = [...$("#nbc_spend").querySelectorAll("input")].map((i) => ({ category: i.dataset.cat, monthlyCents: Math.round((+i.value || 0) * 100) })).filter((s) => s.monthlyCents > 0);
+  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; const amt = +g("amount") || 0; return amt > 0 ? { label: g("label") || "Upcoming purchase", amountCents: Math.round(amt * 100), category: g("category"), monthsFromNow: Math.max(0, parseInt(g("months") || "0", 10) || 0) } : null; }).filter(Boolean);
+  const income = $("#nbc_income").value, household = $("#nbc_household").value, credit = $("#nbc_credit").value, freq = $("#nbc_freq").value, fees = $("#nbc_fees").value;
+  return {
+    profile: {
+      annualIncomeCents: income ? Math.round((+income || 0) * 100) : undefined,
+      householdIncomeCents: household ? Math.round((+household || 0) * 100) : undefined,
+      creditScoreBand: credit || undefined,
+      pointsSavvy: freq !== "rare",
+      willingToPayFees: fees !== "no",
+    },
+    spend,
+    holdings: [...nbcHeld].map((cardId) => ({ cardId })),
+    bonusHistory: [...nbcHist].map((cardId) => ({ cardId })),
+    upcomingPurchases: purchases,
+    travelPlans: [...nbcTravel].map((region) => ({ region })),
+  };
+}
+function gatherAnswers() {
+  const spend = {};
+  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (i.value !== "") spend[i.dataset.cat] = i.value; });
+  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; return { label: g("label"), amount: g("amount"), category: g("category"), months: g("months") }; }).filter((p) => p.amount);
+  return { holdings: [...nbcHeld], bonusHist: [...nbcHist], spend, purchases, income: $("#nbc_income").value, household: $("#nbc_household").value, credit: $("#nbc_credit").value, freq: $("#nbc_freq").value, feesOk: $("#nbc_fees").value, rankBy: $("#nbc_rankby").value, travel: [...nbcTravel], tracking };
+}
+function applyAnswers(a) {
+  if (!a) return;
+  nbcHeld = new Set(a.holdings || []);
+  nbcHist = new Set(a.bonusHist || []);
+  tracking = a.tracking || {};
+  if (a.spend) $("#nbc_spend").querySelectorAll("input").forEach((i) => { i.value = a.spend[i.dataset.cat] != null ? a.spend[i.dataset.cat] : ""; });
+  if (a.income != null) $("#nbc_income").value = a.income;
+  if (a.household != null) $("#nbc_household").value = a.household;
+  if (a.credit != null) $("#nbc_credit").value = a.credit;
+  if (a.freq) $("#nbc_freq").value = a.freq;
+  if (a.feesOk) $("#nbc_fees").value = a.feesOk;
+  if (a.rankBy) $("#nbc_rankby").value = a.rankBy;
+  nbcTravel = new Set(a.travel || []);
+  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.classList.toggle("on", nbcTravel.has(ch.dataset.region)));
+  $("#nbc_purchases").innerHTML = "";
+  (a.purchases || []).forEach((p) => { addPurchaseRow(); const r = $("#nbc_purchases").lastElementChild; r.querySelector('[data-f="label"]').value = p.label || ""; r.querySelector('[data-f="amount"]').value = p.amount || ""; r.querySelector('[data-f="category"]').value = p.category || "groceries"; r.querySelector('[data-f="months"]').value = p.months || ""; });
+  renderHeldChips(); renderHistChips();
+}
+function saveProfileSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(() => store.saveProfile(gatherAnswers()), 400); }
+
+/* ---------- card search widgets ---------- */
+function wireCardSearch(inputSel, resultsSel, excludeSet, onAdd) {
+  const inp = $(inputSel), box = $(resultsSel);
+  inp.oninput = () => {
+    const q = inp.value.toLowerCase().trim();
+    if (!q) { box.innerHTML = ""; return; }
+    const matches = catalog.cards.filter((c) => !excludeSet().has(c.id) && (c.name + " " + c.issuer).toLowerCase().includes(q)).slice(0, 6);
+    box.innerHTML = matches.map((c) => `<div class="nbc-cardopt" data-id="${c.id}">${esc(c.name)}<span>${esc(c.issuer)}</span></div>`).join("") || '<div class="nbc-cardopt muted">No match</div>';
+    box.querySelectorAll(".nbc-cardopt[data-id]").forEach((el) => el.onclick = () => { onAdd(el.dataset.id); inp.value = ""; box.innerHTML = ""; });
+  };
+}
+function renderHeldChips() {
+  const el = $("#nbc_held");
+  el.innerHTML = [...nbcHeld].map((id) => `<span class="nbc-chip">${esc(getCard(id)?.name || id)}<button type="button" data-id="${id}" aria-label="Remove card">&times;</button></span>`).join("") || '<span class="nbc-empty">No cards added yet, that is fine.</span>';
+  el.querySelectorAll("button[data-id]").forEach((b) => b.onclick = () => { nbcHeld.delete(b.dataset.id); delete tracking[b.dataset.id]; renderHeldChips(); renderWallet(); saveProfileSoon(); });
+}
+function renderHistChips() {
+  const el = $("#nbc_hist");
+  el.innerHTML = [...nbcHist].map((id) => `<span class="nbc-chip">${esc(getCard(id)?.name || id)}<button type="button" data-id="${id}" aria-label="Remove card">&times;</button></span>`).join("") || '<span class="nbc-empty">None added.</span>';
+  $("#nbc_histcount").textContent = nbcHist.size ? `(${nbcHist.size})` : "";
+  el.querySelectorAll("button[data-id]").forEach((b) => b.onclick = () => { nbcHist.delete(b.dataset.id); renderHistChips(); saveProfileSoon(); });
+}
+function addPurchaseRow() {
+  const row = ce("div", "nbc-prow");
+  row.innerHTML = `<input placeholder="Label (e.g. furniture)" data-f="label"><div class="nbc-dollar"><span>$</span><input type="number" min="0" placeholder="amount" data-f="amount" aria-label="Purchase amount"></div><select data-f="category">${SPEND_ORDER.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("")}</select><input type="number" min="0" placeholder="in X months" data-f="months" aria-label="Months from now"><button type="button" class="nbc-rm" aria-label="Remove purchase">&times;</button>`;
+  row.querySelector(".nbc-rm").onclick = () => { row.remove(); saveProfileSoon(); };
+  $("#nbc_purchases").appendChild(row);
+}
+
+/* ---------- recommendations (the trust-first results) ---------- */
+$("#nbcForm").onsubmit = (e) => { e.preventDefault(); runRecommend(null); };
+function runRecommend(changeContext) {
+  const input = buildInput();
+  const rankBy = $("#nbc_rankby").value;
+  const options = { rankBy, now: new Date().toISOString() }; // now enables cooldown checks + live transfer-promo notes
+  $("#nbcResult").innerHTML = '<div class="panel" style="margin-top:16px"><div class="skel" style="width:45%"></div><div class="skel" style="width:75%;margin-top:10px"></div><div class="skel" style="width:60%;margin-top:10px"></div></div>';
+  const prev = changeContext ? { recs: lastRecs, addedId: changeContext.addedId } : null;
+  const recs = recommendCards(input, options);
+  const raw = recommendCards(input, { rankBy, topN: 10, diversity: false, now: options.now });
+  lastRecs = recs; lastInput = input; lastOptions = options;
+  renderRecos(recs, raw, rankBy, input, prev);
+  store.saveProfile(gatherAnswers());
+}
+function varietyLabels(raw, recs) {
+  // Re-derive which raw-ranked cards the variety rule skipped, and behind which pick.
+  const picked = new Map(recs.map((r) => [r.cardId, r.rank]));
+  const firstPickByCur = {};
+  for (const r of raw) if (picked.has(r.cardId) && !(r.currencyId in firstPickByCur)) firstPickByCur[r.currencyId] = r.cardName;
+  return raw.map((r) => {
+    if (picked.has(r.cardId)) return { kind: "pick", n: picked.get(r.cardId) };
+    const blocker = firstPickByCur[r.currencyId];
+    if (blocker) return { kind: "hidden", by: blocker };
+    return { kind: "" };
+  });
+}
+function renderRecos(recs, raw, rankBy, input, prev) {
+  const el = $("#nbcResult"); el.innerHTML = "";
+  const wrap = ce("div");
+  wrap.appendChild(ce("div", "explain", `Every value below is <b>what the card adds on top of the ${input.holdings.length ? "cards you told us you hold" : "cards you hold (none yet)"}</b>. Change your wallet and the whole ranking recomputes, that is the point, not a glitch. The full list, including cards the variety rule tucks away, is under "See the full ranking."`));
+  if (prev && prev.recs) wrap.appendChild(buildChangeBanner(prev, recs, raw));
+  if (!recs.length) {
+    wrap.appendChild(ce("div", "empty", input.spend.length ? "Nothing beats the cards you already hold for this profile. That is a good place to be." : "Add your monthly spend above, then find your next best cards."));
+    el.appendChild(wrap); return;
   }
-  if (path === "/api/engagements") return store.list();
-  if (path.startsWith("/api/engagement/")) { const id = decodeURIComponent(path.split("/").pop()); return (await store.get(id)) || { error: "not found" }; }
-  throw new Error("unknown api " + path);
-}
-
-/* ---------- view router ---------- */
-document.querySelectorAll("nav .tab").forEach((t) => t.onclick = () => {
-  document.querySelectorAll("nav .tab").forEach((x) => x.classList.remove("on"));
-  t.classList.add("on");
-  const v = t.dataset.view;
-  ["search", "cards", "plan"].forEach((n) => $("#view-" + n).classList.toggle("hidden", n !== v));
-  if (v === "cards" && !programsLoaded) loadPrograms();
-});
-function gotoView(v){ document.querySelector(`nav .tab[data-view="${v}"]`).click(); }
-
-/* ---------- SEARCH ---------- */
-let lastResults = [], curSort = "score", searchQuery = null, lastDataSource = "simulated";
-$("#s_cabin").querySelectorAll("button").forEach((b) => b.onclick = () => { $("#s_cabin").querySelectorAll("button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); });
-$("#searchForm").onsubmit = async (e) => {
-  e.preventDefault();
-  const cabin = $("#s_cabin .on").dataset.v;
-  searchQuery = { from: $("#s_from").value.trim().toUpperCase(), to: $("#s_to").value.trim().toUpperCase(), cabin, pax: +$("#s_pax").value, month: $("#s_month").value };
-  $("#searchResults").innerHTML = '<div class="panel"><div class="skel" style="width:40%"></div><div class="skel" style="width:70%;margin-top:10px"></div><div class="skel" style="width:55%;margin-top:10px"></div></div>';
-  const r = await api("/api/search", searchQuery);
-  lastResults = r.options || [];
-  lastDataSource = r.dataSource || (r.live ? "live" : "simulated");
-  renderSearch();
-};
-document.querySelectorAll(".sorts button").forEach((b) => b.onclick = () => { document.querySelectorAll(".sorts button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); curSort = b.dataset.sort; renderSearch(); });
-
-function dealTier(s){ if(s>=85)return["Exceptional","badge-top"]; if(s>=70)return["Strong","badge-strong"]; if(s>=55)return["Fair","badge-fair"]; return["Soft","badge-soft"]; }
-function renderSearch() {
-  const meta = $("#searchMeta"), box = $("#searchResults");
-  if (!lastResults.length) { meta.classList.add("hidden"); box.innerHTML = '<div class="empty">No award space found for that search. Try another month or cabin.</div>'; return; }
-  meta.classList.remove("hidden");
-  $("#searchN").textContent = `${lastResults.length} options · ${searchQuery.from} to ${searchQuery.to} · ${searchQuery.cabin} · ${searchQuery.pax} pax · ${lastDataSource} availability`;
-  const opts = [...lastResults];
-  if (curSort === "score") opts.sort((a,b)=>b.dealScore-a.dealScore);
-  if (curSort === "miles") opts.sort((a,b)=>a.milesEach-b.milesEach);
-  if (curSort === "cash") opts.sort((a,b)=>(b.cashEachCad-b.taxesEachCad)-(a.cashEachCad-a.taxesEachCad));
-  box.innerHTML = "";
-  opts.forEach((o, i) => {
-    const valueEach = o.cashEachCad - o.taxesEachCad;
-    const cpp = o.milesEach ? (valueEach / o.milesEach * 100) : 0;
-    const [lab, cls] = dealTier(o.dealScore);
-    const best = curSort === "score" && i === 0;
-    const card = ce("div", "opt" + (best ? " best" : ""));
-    card.innerHTML = `
-      <div class="opt-main">
-        <div class="routing">${o.routing}</div>
-        <div class="carrier">${o.carrier} · ${o.cabin}${best ? ' · <b style="color:var(--accent)">Best value</b>' : ''}</div>
-        <div class="note">${o.note || ""}</div>
+  wrap.appendChild(ce("div", "kick", `Your top ${recs.length} by ${rankBy === "ongoing" ? "ongoing yearly value" : "first-year value"}`)).style.margin = "16px 0 10px";
+  recs.forEach((r) => {
+    const b = r.breakdown || {}, wb = b.welcomeBonus;
+    const hero = rankBy === "ongoing" ? r.ongoingAnnualNetCents : r.firstYearNetCents;
+    const wins = (b.marginalEarnByCategory || []).slice(0, 3).map((m) => `<span>${m.candidateMultiplier}x ${CATEGORY_LABELS[m.category] || m.category} <b>+${ca(m.marginalValueCents / 100)}</b>/yr</span>`).join("");
+    const bonusLine = wb && wb.eligible && wb.feasible ? `<div class="nbc-bonus">Welcome bonus: <b>${nf(wb.amountPoints)}</b> ${esc(curName(wb.currencyId))} (~${ca(wb.valueCents / 100)})${wb.offerRating ? ` · ${wb.offerRating.label}` : ""}</div>`
+      : (wb && wb.eligible && !wb.feasible ? `<div class="nbc-bonus mutedline">Welcome bonus not counted: your projected spend does not reach the minimum in the window</div>`
+      : (wb && !wb.eligible ? `<div class="nbc-bonus mutedline">${esc(wb.eligibilityNote || "Bonus not available to you, not counted")}</div>` : ""));
+    const fee = b.annualFeeCents ? `${ca(b.annualFeeCents / 100)} annual fee${b.feeWaivedYear1 ? " · 1st yr waived" : ""}` : "No annual fee";
+    const rec = ce("div", "nbc-rec" + (r.rank === 1 ? " top" : ""));
+    rec.innerHTML = `<div class="nbc-rec-rank" aria-label="Rank ${r.rank}">${r.rank}</div>
+      <div>
+        <div class="nbc-rec-name">${esc(r.cardName)}</div>
+        <div class="nbc-rec-meta">${esc(r.issuer)} · ${fee}</div>
+        ${bonusLine}
+        ${wins ? `<div class="nbc-wins">${wins}</div>` : ""}
+        ${(b.notes && b.notes.length) ? `<div class="nbc-note">${esc(b.notes[0])}</div>` : ""}
       </div>
-      <div class="opt-nums">
-        <div class="prog">${o.program}</div>
-        <div class="miles num">${nf(o.milesEach)}<span>miles / person</span></div>
-        <div class="taxes num">${ca(o.taxesEachCad)} taxes${o.bookable ? "" : ' · <span class="notbook">round-trip / waitlist</span>'}</div>
-      </div>
-      <div class="opt-score">
-        <span class="badge ${cls}">Score ${o.dealScore} · ${lab}</span>
-        <div class="value num">${ca(valueEach)} value<span>vs ${ca(o.cashEachCad)} cash fare</span></div>
-        <div class="cpp num">${cpp.toFixed(1)}¢ per point</div>
+      <div class="nbc-rec-val">
+        <div class="big num">${ca(hero / 100)}</div>
+        <div class="lab">${rankBy === "ongoing" ? "ongoing / year" : "first year, net"}</div>
+        <div class="alt num">${rankBy === "ongoing" ? ca(r.firstYearNetCents / 100) + " first yr" : ca(r.ongoingAnnualNetCents / 100) + " / yr ongoing"}</div>
       </div>`;
-    const btn = ce("button", "mini", "Plan the earn &rarr;");
-    btn.onclick = () => earnFromAward(o);
-    card.querySelector(".opt-score").appendChild(btn);
-    box.appendChild(card);
+    const btn = ce("button", "mini", "I already have this card");
+    btn.type = "button";
+    btn.onclick = () => { nbcHeld.add(r.cardId); renderHeldChips(); renderWallet(); runRecommend({ addedId: r.cardId }); };
+    rec.querySelector(".nbc-rec-val").appendChild(btn);
+    wrap.appendChild(rec);
   });
-}
-function earnFromAward(o) {
-  gotoView("cards");
-  setSub("plan");
-  $("#e_points").value = o.milesEach * (searchQuery?.pax || 1);
-  const sel = $("#e_program");
-  const match = [...sel.options].find((op) => op.value.toLowerCase().includes(o.program.toLowerCase()) || o.program.toLowerCase().includes(op.value.toLowerCase().split(" ").pop()));
-  if (match) sel.value = match.value;
-  $("#earnForm").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-/* ---------- CARDS: sub tabs ---------- */
-let programsLoaded = false, catalog = null, catFilter = "All";
-document.querySelectorAll("#view-cards .tab").forEach((t) => t.onclick = () => setSub(t.dataset.sub));
-function setSubBase(name) {
-  document.querySelectorAll("#view-cards .tab").forEach((x) => x.classList.toggle("on", x.dataset.sub === name));
-  ["nextcard", "plan", "catalog", "transfers"].forEach((n) => $("#sub-" + n).classList.toggle("hidden", n !== name));
-  if ((name === "catalog" || name === "transfers") && !catalog) loadCatalog();
-}
-function setSub(name) { setSubBase(name); if (name === "nextcard") initNextCard(); if (name === "transfers") { (catalog ? Promise.resolve() : loadCatalog()).then(() => renderTransfers()); } if (name === "catalog" && catalog) renderCatalog(); }
-async function loadPrograms() {
-  programsLoaded = true;
-  const r = await api("/api/programs");
-  const sel = $("#e_program");
-  sel.innerHTML = r.programs.filter(p=>p.type!=="cashback").map((p) => `<option value="${p.name}">${p.name}</option>`).join("");
-  const am = [...sel.options].find((o) => o.value.includes("Asia Miles")); if (am) sel.value = am.value;
-}
-
-/* ---------- CARDS: earn planner ---------- */
-$("#earnForm").onsubmit = async (e) => {
-  e.preventDefault();
-  const profile = { incomeBand: $("#e_income").value, monthlySpend: +$("#e_spend").value, cardsHeld: $("#e_held").value.split(",").map((s) => s.trim()).filter(Boolean) };
-  const target = { points: +$("#e_points").value, deadlineMonths: +$("#e_deadline").value, currencyName: $("#e_program").value };
-  $("#earnResult").innerHTML = '<div class="panel" style="margin-top:16px"><div class="skel" style="width:50%"></div><div class="skel" style="width:80%;margin-top:10px"></div></div>';
-  const r = await api("/api/earn", { profile, target });
-  renderEarn(r);
-};
-function renderEarn(r) {
-  const enough = r.projectedPoints >= r.target;
-  const el = $("#earnResult"); el.innerHTML = "";
-  const wrap = ce("div", null, ""); wrap.style.marginTop = "18px";
-  const sum = ce("div", "earn-summary");
-  sum.innerHTML = `
-    <div class="cell"><div class="big ${enough ? "good" : ""} num">${nf(r.projectedPoints)}</div><div class="lab">projected points</div></div>
-    <div class="cell"><div class="big num">${nf(r.target)}</div><div class="lab">target needed</div></div>
-    <div class="cell"><div class="big num">${(r.surplus>=0?"+":"")+nf(r.surplus)}</div><div class="lab">cushion</div></div>
-    <div class="cell"><div class="big num">${r.timelineMonths} mo</div><div class="lab">timeline · ${ca(r.cashOutlayFees)} fees</div></div>`;
-  wrap.appendChild(sum);
-  (r.cards || []).forEach((c) => {
-    const row = ce("div", "cardrow");
-    row.innerHTML = `<div><div class="nm">${c.card}</div><div class="nt">${c.note}</div></div>
-      <div class="rt"><div class="pts num">+${nf(c.sub)}</div><div class="fee num">${ca(c.minSpend)} spend · ${c.spendMonths} mo · ${ca(c.annualFee)} fee</div></div>`;
-    wrap.appendChild(row);
-  });
-  const note = ce("div", "foot-note", "Commission-blind: card order reflects only your trip, never referral payouts. " + (r.source || ""));
+  // Full ranking, nothing hidden.
+  const labels = varietyLabels(raw, recs);
+  const fold = ce("details", "fold");
+  fold.innerHTML = `<summary>See the full ranking (top ${raw.length}, nothing hidden)</summary>
+    <div class="fold-in">
+      <p style="font-size:12.5px;color:var(--muted);margin:2px 0 10px">The top picks show at most one card per points program so you get genuinely different options. Cards that rule tucked away are still ranked here. Every number is the same deterministic math.</p>
+      <div style="overflow-x:auto"><table class="rank"><thead><tr><th>#</th><th>Card</th><th>First year</th><th>Ongoing / yr</th><th>Status</th></tr></thead><tbody>
+      ${raw.map((r, i) => `<tr><td class="n num">${i + 1}</td><td>${esc(r.cardName)}<span style="color:var(--muted)"> · ${esc(curName(r.currencyId))}</span></td><td class="num">${ca(r.firstYearNetCents / 100)}</td><td class="num">${ca(r.ongoingAnnualNetCents / 100)}</td><td>${labels[i].kind === "pick" ? `<span class="tag pick">Picked #${labels[i].n}</span>` : labels[i].kind === "hidden" ? `<span class="tag hid">Behind ${esc(labels[i].by)} (same program)</span>` : ""}</td></tr>`).join("")}
+      </tbody></table></div>
+    </div>`;
+  wrap.appendChild(fold);
+  const note = ce("div", "foot-note", "Ranked by net value over the cards you already hold, using deterministic math. Commission-blind: no card pays us. Offers change often, confirm with the issuer before applying.");
   note.style.borderTop = "0"; wrap.appendChild(note);
   el.appendChild(wrap);
 }
+function buildChangeBanner(prev, recs, raw) {
+  const added = getCard(prev.addedId);
+  const newIds = new Map(recs.map((r) => [r.cardId, r]));
+  const rawRank = new Map(raw.map((r, i) => [r.cardId, i + 1]));
+  const lines = [];
+  for (const old of prev.recs) {
+    if (old.cardId === prev.addedId) continue;
+    const now = newIds.get(old.cardId);
+    if (now) lines.push(`<li><b>${esc(old.cardName)}</b> ${old.rank === now.rank ? `stays #${now.rank}` : `moved #${old.rank} to #${now.rank}`}, now worth ${ca((lastOptions.rankBy === "ongoing" ? now.ongoingAnnualNetCents : now.firstYearNetCents) / 100)} on top of your updated wallet</li>`);
+    else lines.push(`<li><b>${esc(old.cardName)}</b> left the top picks: ${rawRank.has(old.cardId) ? `it now ranks #${rawRank.get(old.cardId)} overall` : "with your updated wallet it no longer adds enough value"} (see the full ranking)</li>`);
+  }
+  for (const r of recs) {
+    if (newIds.has(r.cardId) && !prev.recs.some((o) => o.cardId === r.cardId)) {
+      const sameCur = added && r.currencyId === added.currencyId;
+      lines.push(`<li><b>${esc(r.cardName)}</b> is new here: ${sameCur ? `it was ranked all along but tucked behind ${esc(added.name)} by the one-card-per-program rule; with ${esc(added.name)} in your wallet, its slot opened up` : `your wallet change re-based every card's added value, and it now comes out ahead`}</li>`);
+    }
+  }
+  return ce("div", "banner", `<b>You added ${esc(added ? added.name : prev.addedId)} to your wallet.</b> Every card was re-scored against the new baseline. What changed and why:<ul>${lines.join("")}</ul>`);
+}
 
-/* ---------- CARDS: catalogue ---------- */
-async function loadCatalog() {
-  catalog = await api("/api/catalog");
-  window.curById = Object.fromEntries(catalog.currencies.map((c) => [c.id, c]));
+/* ---------- wallet ---------- */
+function renderWallet() {
+  const list = $("#w_list");
+  const held = [...nbcHeld].map((id) => getCard(id)).filter(Boolean);
+  if (!held.length) { list.innerHTML = '<div class="empty">No cards in your wallet yet. Add the cards you hold above, or from the survey.</div>'; $("#w_rankout").innerHTML = ""; return; }
+  list.innerHTML = "";
+  const nowIso = new Date().toISOString();
+  const monthly = [...$("#nbc_spend").querySelectorAll("input")].reduce((s, i) => s + Math.round((+i.value || 0) * 100), 0);
+  for (const card of held) {
+    const w = ce("div", "wcard");
+    const fee = card.annualFeeCents ? `${ca(card.annualFeeCents / 100)} annual fee` : "No annual fee";
+    w.innerHTML = `<div class="nm">${esc(card.name)}<button type="button" class="rm" data-id="${card.id}">Remove</button></div>
+      <div class="meta">${esc(card.issuer)} · ${esc(curName(card.currencyId))} · ${fee}</div>`;
+    w.querySelector(".rm").onclick = () => { nbcHeld.delete(card.id); delete tracking[card.id]; renderHeldChips(); renderWallet(); saveProfileSoon(); };
+    if (card.welcomeBonus) {
+      const t = tracking[card.id] || {};
+      const trackEl = ce("div");
+      trackEl.innerHTML = `<div class="track">
+        <div><label>Opened on</label><input type="date" data-t="opened" value="${esc(t.opened || "")}"></div>
+        <div><label>Spent so far</label><div class="nbc-dollar" style="max-width:none"><span>$</span><input type="number" min="0" data-t="spent" value="${esc(t.spent || "")}" aria-label="Spent toward bonus"></div></div>
+        <div id="trk-${card.id}"></div>
+      </div>`;
+      const update = () => {
+        const opened = trackEl.querySelector('[data-t="opened"]').value;
+        const spent = +trackEl.querySelector('[data-t="spent"]').value || 0;
+        tracking[card.id] = { opened, spent };
+        const out = trackEl.querySelector(`[id="trk-${card.id}"]`);
+        if (!opened) { out.innerHTML = '<div class="track-line" style="color:var(--muted)">Set the open date to track this card\'s welcome bonus.</div>'; return; }
+        const p = trackBonus(card.id, opened, Math.round(spent * 100), nowIso, monthly);
+        if (!p) { out.innerHTML = ""; return; }
+        const statusTag = p.status === "done" ? '<span class="tag ok">Bonus earned</span>' : p.status === "expired" ? '<span class="tag bad">Window expired</span>' : p.status === "on_track" ? '<span class="tag ok">On track</span>' : '<span class="tag warn">Behind pace</span>';
+        out.innerHTML = `${statusTag}<div class="prog" role="progressbar" aria-valuenow="${Math.round(p.pct * 100)}" aria-valuemin="0" aria-valuemax="100"><div style="width:${Math.round(p.pct * 100)}%"></div></div>
+          <div class="track-line num">${ca(p.spentCents / 100)} of ${ca(p.targetCents / 100)} · ${p.daysLeft >= 0 ? p.daysLeft + " days left" : "deadline passed"} · bonus ${nf(p.fullBonusPoints)} pts (~${ca(p.bonusValueCents / 100)})${p.status === "behind" ? ` · put ~${ca(p.extraPerWeekCents / 100)}/week extra on this card` : ""}</div>`;
+        saveProfileSoon();
+      };
+      trackEl.querySelectorAll("input").forEach((i) => i.oninput = update);
+      w.appendChild(trackEl);
+      queueMicrotask(update);
+    }
+    const perks = tracking[card.id]?.opened ? perkReminders(card.id, tracking[card.id].opened, nowIso) : [];
+    if (perks.length) {
+      const pk = ce("div");
+      pk.innerHTML = `<div style="margin-top:12px" class="kick">Use it or lose it</div>` + perks.slice(0, 4).map((p) => `<div class="perk"><span>${esc(p.label)}${p.amountCents ? " (" + ca(p.amountCents / 100) + ")" : ""}</span><span class="num" style="color:${p.daysLeft <= 14 ? "var(--warn)" : "var(--muted)"}">${p.daysLeft} days</span></div>`).join("");
+      w.appendChild(pk);
+    }
+    list.appendChild(w);
+  }
+}
+$("#w_rankbtn").onclick = () => {
+  const cat = $("#w_cat").value, amt = Math.round((+$("#w_amt").value || 0) * 100);
+  const out = $("#w_rankout");
+  if (!nbcHeld.size) { out.innerHTML = '<div class="empty" style="padding:16px">Add the cards you hold first.</div>'; return; }
+  if (amt <= 0) { out.innerHTML = '<div class="empty" style="padding:16px">Enter an amount above zero.</div>'; return; }
+  const rows = rankWallet(buildInput(), cat, amt);
+  out.innerHTML = `<div style="overflow-x:auto"><table class="rank"><thead><tr><th>Use</th><th>Card</th><th>Earns</th><th>Worth</th></tr></thead><tbody>
+    ${rows.map((r, i) => `<tr><td>${i === 0 ? '<span class="tag ok">Best</span>' : ""}</td><td class="n">${esc(r.cardName)}</td><td class="num">${r.multiplier}x ${esc(r.currencyName)} (${nf(r.points)} pts)</td><td class="num">${ca(r.valueCents / 100)}</td></tr>`).join("")}
+  </tbody></table></div>`;
+};
+
+/* ---------- big purchase ---------- */
+$("#bbForm").onsubmit = (e) => {
+  e.preventDefault();
+  const amt = Math.round((+$("#bb_amt").value || 0) * 100);
+  const cat = $("#bb_cat").value;
+  const maxCards = $("#bb_max").value ? +$("#bb_max").value : undefined;
+  const el = $("#bbResult");
+  if (amt < 10000) { el.innerHTML = '<div class="empty">Enter at least CA$100.</div>'; return; }
+  const plan = planPurchase(buildInput(), amt, cat, { maxCards, now: new Date().toISOString() });
+  const ci = plan.creditImpact;
+  const riskTag = ci.riskLevel === "ok" ? '<span class="tag ok">Comfortable</span>' : ci.riskLevel === "caution" ? '<span class="tag warn">Caution</span>' : '<span class="tag bad">Risky</span>';
+  el.innerHTML = "";
+  const wrap = ce("div");
+  wrap.appendChild(ce("div", "plan-sum", `
+    <div class="cell"><div class="big good num">${ca(plan.totalValueCents / 100)}</div><div class="lab">total value with this plan</div></div>
+    <div class="cell"><div class="big num">+${ca(plan.upliftVsSingleCents / 100)}</div><div class="lab">vs best single card (${esc(plan.singleCardName || "none")}, ${ca(plan.singleCardValueCents / 100)})</div></div>
+    <div class="cell"><div class="big num">${plan.cards.length}</div><div class="lab">new ${plan.cards.length === 1 ? "card" : "cards"} · ${riskTag}</div></div>`));
+  if (!plan.cards.length) {
+    wrap.appendChild(ce("div", "empty", "No welcome bonus is worth opening a card for at this amount. Put it on your best current card instead."));
+  } else {
+    plan.cards.forEach((c, i) => {
+      const rec = ce("div", "nbc-rec");
+      rec.innerHTML = `<div class="nbc-rec-rank">${i + 1}</div>
+        <div>
+          <div class="nbc-rec-name">${esc(c.cardName)}</div>
+          <div class="nbc-rec-meta">${esc(c.issuer)} · put <b class="num">${ca(c.allocateCents / 100)}</b> of the purchase on it${c.tiersAvailable > 1 ? ` · tier ${c.tierHit}/${c.tiersAvailable}` : ""}</div>
+          <div class="nbc-bonus">Unlocks <b>${nf(c.bonusPoints)}</b> ${esc(c.bonusCurrencyName)} (~${ca(c.bonusValueCents / 100)})${c.feeWaivedYear1 ? " · fee waived yr 1" : c.annualFeeCents ? ` · ${ca(c.annualFeeCents / 100)} fee` : ""}</div>
+          ${c.skippedTierNote ? `<div class="nbc-note">${esc(c.skippedTierNote)}</div>` : ""}
+        </div>
+        <div class="nbc-rec-val"><div class="big num">${ca(c.netValueCents / 100)}</div><div class="lab">net value</div></div>`;
+      wrap.appendChild(rec);
+    });
+    if (plan.leftoverCents > 0) wrap.appendChild(ce("div", "nbc-note", `Remaining ${ca(plan.leftoverCents / 100)} goes on ${esc(plan.leftoverCardName || "your best current card")} for ${ca(plan.leftoverEarnCents / 100)} more.`)).style.margin = "4px 4px 12px";
+  }
+  wrap.appendChild(ce("div", "explain", `<b>Credit impact:</b> ${esc(ci.note)}`));
+  el.appendChild(wrap);
+};
+
+/* ---------- catalogue ---------- */
+let catFilter = "All", catWired = false;
+function initCatalog() {
+  if (catWired) return; catWired = true;
   const f = $("#catFilters");
-  f.innerHTML = ["All", ...catalog.issuers].map((i) => `<span class="fchip${i === "All" ? " on" : ""}" data-i="${i}">${i}</span>`).join("");
+  f.innerHTML = ["All", ...catalog.issuers].map((i) => `<span class="fchip${i === "All" ? " on" : ""}" data-i="${esc(i)}">${esc(i)}</span>`).join("");
   f.querySelectorAll(".fchip").forEach((c) => c.onclick = () => { f.querySelectorAll(".fchip").forEach((x) => x.classList.remove("on")); c.classList.add("on"); catFilter = c.dataset.i; renderCatalog(); });
   $("#catSearch").oninput = renderCatalog;
+  $("#cat_seg").querySelectorAll("button").forEach((b) => b.onclick = () => {
+    $("#cat_seg").querySelectorAll("button").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+    const t = b.dataset.c === "transfers";
+    $("#cat_cards").classList.toggle("hidden", t);
+    $("#cat_transfers").classList.toggle("hidden", !t);
+    if (t) renderTransfers();
+  });
   renderCatalog();
 }
 function renderCatalog() {
@@ -759,227 +813,101 @@ function renderCatalog() {
   const cards = catalog.cards.filter((c) => (catFilter === "All" || c.issuer === catFilter) && (!q || (c.name + " " + c.issuer).toLowerCase().includes(q)));
   if (!cards.length) { grid.innerHTML = '<div class="empty">No cards match.</div>'; return; }
   cards.forEach((c) => {
-    const cur = window.curById[c.currencyId];
-    const top = (c.earnRules || []).filter((r) => r.multiplier > 1).slice(0, 4).map((r) => `<span>${r.multiplier}x ${r.category.replace(/_/g, " ")}</span>`).join("");
+    const cur = curById[c.currencyId];
+    const top = (c.earnRules || []).filter((r) => r.multiplier > 1).slice(0, 4).map((r) => `<span>${r.multiplier}x ${CATEGORY_LABELS[r.category] || r.category.replace(/_/g, " ")}</span>`).join("");
     const wb = c.welcomeBonus;
-    const wbLine = wb ? `<div class="wb num">Welcome: up to ${nf(wb.bestPoints || (wb.tiers && wb.tiers[wb.tiers.length-1].amount) || 0)} pts</div>` : "";
-    const fee = c.annualFeeCents ? `<b>${ca(c.annualFeeCents/100)}</b> annual fee${c.feeWaivedFirstYear ? " · 1st yr waived" : ""}` : "<b>No</b> annual fee";
+    const wbLine = wb ? `<div class="wb num">Welcome: up to ${nf(wb.bestPoints || (wb.tiers && wb.tiers[wb.tiers.length - 1].amount) || 0)} pts</div>` : "";
+    const fee = c.annualFeeCents ? `<b>${ca(c.annualFeeCents / 100)}</b> annual fee${c.feeWaivedFirstYear ? " · 1st yr waived" : ""}` : "<b>No</b> annual fee";
     const card = ce("div", "ccard");
-    card.innerHTML = `<h3>${c.name}</h3><div class="meta">${c.issuer} · ${c.network.toUpperCase()}</div>
-      <span class="cur">${cur ? cur.name : c.currencyId}</span>
+    card.innerHTML = `<h3>${esc(c.name)}</h3><div class="meta">${esc(c.issuer)} · ${esc((c.network || "").toUpperCase())}</div>
+      <span class="cur">${esc(cur ? cur.name : c.currencyId)}</span>
       <div class="earn">${top || '<span>1x everything</span>'}</div>${wbLine}
       <div class="fee num">${fee}</div>`;
     grid.appendChild(card);
   });
 }
-
-/* ---------- CARDS: transfer graph ---------- */
 function renderTransfers() {
   const g = $("#tGraph"); g.innerHTML = "";
   const byFrom = {};
   catalog.transfers.forEach((t) => { (byFrom[t.fromCurrencyId] ||= []).push(t); });
   Object.entries(byFrom).forEach(([from, edges]) => {
-    const cur = window.curById[from];
+    const cur = curById[from];
     const node = ce("div", "tnode");
-    node.innerHTML = `<h3>${cur ? cur.name : from}<span class="cpp">~${cur ? cur.baselineCpp : "?"}¢ base</span></h3>` +
-      edges.map((e) => { const to = window.curById[e.toCurrencyId]; return `<div class="tedge"><span class="to">${to ? to.name : e.toCurrencyId}</span><span class="ratio num">${e.ratio}:1</span></div>`; }).join("");
+    node.innerHTML = `<h3>${esc(cur ? cur.name : from)}<span class="cpp">~${cur ? cur.baselineCpp : "?"}&cent; base</span></h3>` +
+      edges.map((e) => `<div class="tedge"><span class="to">${esc(curName(e.toCurrencyId))}</span><span class="ratio num">${e.ratio}:1</span></div>`).join("");
     g.appendChild(node);
   });
   if (!Object.keys(byFrom).length) g.innerHTML = '<div class="empty">No transfer routes loaded.</div>';
 }
 
-/* ---------- CARDS: next best card (survey -> recommend) ---------- */
-const CATEGORY_LABELS = { groceries: "Groceries", dining: "Dining out", gas: "Gas", travel: "Travel", transit: "Transit", drugstore: "Drugstore", recurring: "Bills & subscriptions", entertainment: "Entertainment", foreign: "Foreign purchases", everything_else: "Everything else" };
-const SPEND_ORDER = ["groceries", "dining", "gas", "travel", "transit", "recurring", "entertainment", "drugstore", "foreign", "everything_else"];
-const REGION_LABELS = { general: "General / flexible", domestic: "Within Canada", north_america: "North America", europe: "Europe", asia: "Asia", latam: "Latin America" };
-let nextcardInited = false, nbcHeld = new Set(), nbcTravel = new Set();
-async function initNextCard() {
-  if (nextcardInited) return; nextcardInited = true;
-  if (!catalog) catalog = await api("/api/catalog");
-  window.curById = window.curById || Object.fromEntries(catalog.currencies.map((c) => [c.id, c]));
-  window.__catById = Object.fromEntries(catalog.cards.map((c) => [c.id, c]));
-  $("#nbc_spend").innerHTML = SPEND_ORDER.map((c) => `<div class="nbc-spendrow"><span>${CATEGORY_LABELS[c]}</span><div class="nbc-dollar"><span>$</span><input type="number" min="0" data-cat="${c}" placeholder="0"></div></div>`).join("");
-  const defaults = { groceries: 800, dining: 400, recurring: 300, everything_else: 600 };
-  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (defaults[i.dataset.cat]) i.value = defaults[i.dataset.cat]; });
-  $("#nbc_travel").innerHTML = Object.entries(REGION_LABELS).map(([k, v]) => `<span class="fchip" data-region="${k}">${v}</span>`).join("");
-  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.onclick = () => { ch.classList.toggle("on"); if (nbcTravel.has(ch.dataset.region)) nbcTravel.delete(ch.dataset.region); else nbcTravel.add(ch.dataset.region); });
-  $("#nbc_cardsearch").oninput = renderNbcSearch;
-  $("#nbc_addpurchase").onclick = addNbcPurchase;
-  renderNbcHeld();
-  const saved = await store.loadProfile();
-  if (saved) applyNbcAnswers(saved);
+/* ---------- section router ---------- */
+function setSub(name) {
+  document.querySelectorAll("nav .tab").forEach((x) => x.classList.toggle("on", x.dataset.sub === name));
+  ["nextcard", "wallet", "bigbuy", "catalog"].forEach((n) => $("#sub-" + n).classList.toggle("hidden", n !== name));
+  if (name === "catalog") initCatalog();
+  if (name === "wallet") renderWallet();
 }
-function gatherNbcAnswers() {
-  const spend = {};
-  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (i.value !== "") spend[i.dataset.cat] = i.value; });
-  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; return { label: g("label"), amount: g("amount"), category: g("category"), months: g("months") }; }).filter((p) => p.amount);
-  return { holdings: [...nbcHeld], spend, purchases, income: $("#nbc_income").value, credit: $("#nbc_credit").value, freq: $("#nbc_freq").value, rankBy: $("#nbc_rankby").value, travel: [...nbcTravel] };
-}
-function applyNbcAnswers(a) {
-  if (!a) return;
-  nbcHeld = new Set(a.holdings || []); renderNbcHeld();
-  if (a.spend) $("#nbc_spend").querySelectorAll("input").forEach((i) => { i.value = a.spend[i.dataset.cat] != null ? a.spend[i.dataset.cat] : ""; });
-  if (a.income != null) $("#nbc_income").value = a.income;
-  if (a.credit != null) $("#nbc_credit").value = a.credit;
-  if (a.freq) $("#nbc_freq").value = a.freq;
-  if (a.rankBy) $("#nbc_rankby").value = a.rankBy;
-  nbcTravel = new Set(a.travel || []);
-  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.classList.toggle("on", nbcTravel.has(ch.dataset.region)));
-  $("#nbc_purchases").innerHTML = "";
-  (a.purchases || []).forEach((p) => { addNbcPurchase(); const r = $("#nbc_purchases").lastElementChild; r.querySelector('[data-f="label"]').value = p.label || ""; r.querySelector('[data-f="amount"]').value = p.amount || ""; r.querySelector('[data-f="category"]').value = p.category || "groceries"; r.querySelector('[data-f="months"]').value = p.months || ""; });
-}
-function renderNbcSearch() {
-  const q = $("#nbc_cardsearch").value.toLowerCase().trim();
-  const box = $("#nbc_cardresults");
-  if (!q) { box.innerHTML = ""; return; }
-  const matches = catalog.cards.filter((c) => !nbcHeld.has(c.id) && (c.name + " " + c.issuer).toLowerCase().includes(q)).slice(0, 6);
-  box.innerHTML = matches.map((c) => `<div class="nbc-cardopt" data-id="${c.id}">${c.name}<span>${c.issuer}</span></div>`).join("") || '<div class="nbc-cardopt muted">No match</div>';
-  box.querySelectorAll(".nbc-cardopt[data-id]").forEach((el) => el.onclick = () => { nbcHeld.add(el.dataset.id); $("#nbc_cardsearch").value = ""; box.innerHTML = ""; renderNbcHeld(); });
-}
-function renderNbcHeld() {
-  const c = window.__catById;
-  $("#nbc_held").innerHTML = [...nbcHeld].map((id) => `<span class="nbc-chip">${c[id]?.name || id}<button type="button" data-id="${id}">&times;</button></span>`).join("") || '<span class="nbc-empty">No cards added yet, that is fine.</span>';
-  $("#nbc_held").querySelectorAll("button[data-id]").forEach((b) => b.onclick = () => { nbcHeld.delete(b.dataset.id); renderNbcHeld(); });
-}
-function addNbcPurchase() {
-  const row = ce("div", "nbc-prow");
-  row.innerHTML = `<input placeholder="Label (e.g. furniture)" data-f="label"><div class="nbc-dollar"><span>$</span><input type="number" min="0" placeholder="amount" data-f="amount"></div><select data-f="category">${SPEND_ORDER.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("")}</select><input type="number" min="0" placeholder="in X months" data-f="months"><button type="button" class="nbc-rm" aria-label="Remove">&times;</button>`;
-  row.querySelector(".nbc-rm").onclick = () => row.remove();
-  $("#nbc_purchases").appendChild(row);
-}
-$("#nbcForm").onsubmit = async (e) => {
-  e.preventDefault();
-  const spend = [...$("#nbc_spend").querySelectorAll("input")].map((i) => ({ category: i.dataset.cat, monthlyCents: Math.round((+i.value || 0) * 100) })).filter((s) => s.monthlyCents > 0);
-  const purchases = [...$("#nbc_purchases").querySelectorAll(".nbc-prow")].map((r) => { const g = (f) => r.querySelector(`[data-f="${f}"]`).value; const amt = +g("amount") || 0; return amt > 0 ? { label: g("label") || "Upcoming purchase", amountCents: Math.round(amt * 100), category: g("category"), monthsFromNow: Math.max(0, parseInt(g("months") || "0", 10) || 0) } : null; }).filter(Boolean);
-  const income = $("#nbc_income").value, credit = $("#nbc_credit").value, freq = $("#nbc_freq").value;
-  const input = {
-    profile: { annualIncomeCents: income ? Math.round((+income || 0) * 100) : undefined, creditScoreBand: credit || undefined, pointsSavvy: freq !== "rare", willingToPayFees: true },
-    spend, holdings: [...nbcHeld].map((cardId) => ({ cardId })), bonusHistory: [], upcomingPurchases: purchases, travelPlans: [...nbcTravel].map((region) => ({ region })),
-  };
-  const rankBy = $("#nbc_rankby").value;
-  $("#nbcResult").innerHTML = '<div class="panel" style="margin-top:16px"><div class="skel" style="width:45%"></div><div class="skel" style="width:75%;margin-top:10px"></div><div class="skel" style="width:60%;margin-top:10px"></div></div>';
-  const recs = await api("/api/recommend", { input, options: { rankBy } });
-  renderRecos(recs, rankBy, spend.length === 0);
-  store.saveProfile(gatherNbcAnswers());
-};
-function renderRecos(recs, rankBy, noSpend) {
-  const el = $("#nbcResult"); el.innerHTML = "";
-  if (!recs || !recs.length) { el.innerHTML = `<div class="empty" style="margin-top:16px">${noSpend ? "Add your monthly spend above, then find your next best cards." : "Nothing beats the cards you already hold for this profile. That is a good place to be."}</div>`; return; }
-  const catName = (id) => (window.curById && window.curById[id]?.name) || id;
-  const wrap = ce("div", null, `<div class="kick" style="margin:18px 0 10px">Your top ${recs.length} by ${rankBy === "ongoing" ? "ongoing yearly value" : "first-year value"}</div>`);
-  recs.forEach((r) => {
-    const b = r.breakdown || {}, wb = b.welcomeBonus;
-    const hero = rankBy === "ongoing" ? r.ongoingAnnualNetCents : r.firstYearNetCents;
-    const wins = (b.marginalEarnByCategory || []).slice(0, 3).map((m) => `<span>${m.candidateMultiplier}x ${CATEGORY_LABELS[m.category] || m.category} <b>+${ca(m.marginalValueCents / 100)}</b>/yr</span>`).join("");
-    const bonusLine = wb && wb.eligible && wb.feasible ? `<div class="nbc-bonus">Welcome bonus: <b>${nf(wb.amountPoints)}</b> ${catName(wb.currencyId)} (~${ca(wb.valueCents / 100)})${wb.offerRating ? ` · ${wb.offerRating.label}` : ""}</div>`
-      : (wb && wb.eligible && !wb.feasible ? `<div class="nbc-bonus muted">Welcome bonus not counted, your projected spend doesn't reach the minimum in the window</div>`
-      : (wb && !wb.eligible ? `<div class="nbc-bonus muted">${wb.eligibilityNote || "Bonus not available"}</div>` : ""));
-    const fee = b.annualFeeCents ? `${ca(b.annualFeeCents / 100)} annual fee${b.feeWaivedYear1 ? " · 1st yr waived" : ""}` : "No annual fee";
-    const rec = ce("div", "nbc-rec");
-    rec.innerHTML = `<div class="nbc-rec-rank">${r.rank}</div>
-      <div class="nbc-rec-main">
-        <div class="nbc-rec-name">${r.cardName}</div>
-        <div class="nbc-rec-meta">${r.issuer} · ${fee}</div>
-        ${bonusLine}
-        ${wins ? `<div class="nbc-wins">${wins}</div>` : ""}
-        ${(b.notes && b.notes.length) ? `<div class="nbc-note">${b.notes[0]}</div>` : ""}
-      </div>
-      <div class="nbc-rec-val">
-        <div class="big num">${ca(hero / 100)}</div>
-        <div class="lab">${rankBy === "ongoing" ? "ongoing / year" : "first year, net"}</div>
-        <div class="alt num">${rankBy === "ongoing" ? ca(r.firstYearNetCents / 100) + " first yr" : ca(r.ongoingAnnualNetCents / 100) + " / yr ongoing"}</div>
-      </div>`;
-    wrap.appendChild(rec);
-  });
-  const note = ce("div", "foot-note", "Ranked by net value over the cards you already hold, using deterministic math. Commission-blind: no card pays us. Offers may change, confirm with the issuer.");
-  note.style.borderTop = "0"; wrap.appendChild(note);
-  el.appendChild(wrap);
-}
+document.querySelectorAll("nav .tab").forEach((t) => t.onclick = () => setSub(t.dataset.sub));
 
-/* ---------- PLAN: orchestration ---------- */
-$("#runForm").onsubmit = async (e) => {
-  e.preventDefault();
-  const intake = {
-    client: { name: $("#p_name").value, homeAirport: $("#p_home").value.toUpperCase(), incomeBand: "100-140k CAD", monthlySpend: +$("#p_spend").value, cardsHeld: $("#p_held").value.split(",").map((s) => s.trim()).filter(Boolean) },
-    request: { from: $("#p_from").value.toUpperCase(), to: $("#p_to").value.toUpperCase(), cabin: $("#p_cabin").value, pax: +$("#p_pax").value, month: $("#p_month").value, deadlineMonths: +$("#p_deadline").value, guaranteedValueFloor: +$("#p_floor").value },
-  };
-  $("#runResult").innerHTML = '<div class="panel"><div class="skel" style="width:30%"></div><div class="skel" style="width:60%;margin-top:12px"></div><div class="skel" style="width:50%;margin-top:12px"></div></div>';
-  const cf = await api("/api/run", intake);
-  renderRun(cf);
-  loadEngagements();
-};
-async function loadEngagements() {
-  const items = await api("/api/engagements");
-  const list = $("#engList");
-  if (!items.length) { list.innerHTML = '<div class="empty" style="padding:20px">No engagements yet.</div>'; return; }
-  list.innerHTML = "";
-  items.forEach((it) => {
-    const e = ce("div", "eng " + (it.verdict === "GO" ? "go" : "nogo"));
-    e.innerHTML = `<div class="r">${it.verdict || "?"} · ${it.name || "Client"}</div><div class="v num">${it.route} · ${it.cabin || ""} · ${it.value ? ca(it.value) : "n/a"}</div>`;
-    e.onclick = async () => { const cf = await api("/api/engagement/" + it.id); renderRun(cf); };
-    list.appendChild(e);
-  });
-}
-function md(s) {
-  if (!s) return "";
-  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")
-    .replace(/^### (.*)$/gm,"<h3>$1</h3>").replace(/^## (.*)$/gm,"<h2>$1</h2>").replace(/^# (.*)$/gm,"<h1>$1</h1>")
-    .replace(/^\s*[-*] (.*)$/gm,"<li>$1</li>").replace(/(<li>[\s\S]*?<\/li>)/g,"<ul>$1</ul>")
-    .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/^---$/gm,"<hr>")
-    .split(/\n{2,}/).map((b)=>/^<(h\d|ul|hr)/.test(b.trim())?b:`<p>${b.trim().replace(/\n/g,"<br>")}</p>`).join("");
-}
-function renderRun(cf) {
-  const go = cf.realityCheck?.verdict === "GO";
-  const v = cf.value || {}, ch = cf.chosen || {}, ep = cf.earnPlan || {}, rc = cf.realityCheck || {};
-  const box = $("#runResult"); box.innerHTML = "";
-  const top = ce("div", "panel");
-  top.innerHTML = `<span class="verdict ${go ? "go" : "nogo"}">${go ? "GO" : "NO-GO"}</span>
-    <div style="font-size:13.5px;color:var(--muted);margin-top:12px">${cf.client?.name || ""} · ${cf.request?.pax}× ${cf.request?.cabin}, ${cf.request?.from} to ${cf.request?.to} · ${cf.request?.month}</div>
-    <div class="hero-val num">${ca(v.valueDelivered || 0)}</div>
-    <div class="hero-sub num">${(v.centsPerPoint || 0).toFixed(2)}¢ per point · floor ${ca(cf.request?.guaranteedValueFloor || 0)} · ${nf(v.milesTotal||0)} miles total</div>
-    <div class="two">
-      <div class="box"><h4>What we booked</h4>
-        <div class="kv"><span class="k">Award</span><span class="v">${ch.program || "n/a"}</span></div>
-        <div class="kv"><span class="k">Routing</span><span class="v">${ch.routing || "n/a"}</span></div>
-        <div class="kv"><span class="k">Carrier</span><span class="v">${ch.carrier || "n/a"}</span></div>
-        <div class="kv"><span class="k">Miles each</span><span class="v num">${nf(ch.milesEach||0)}</span></div>
-        <div class="kv"><span class="k">Taxes each</span><span class="v num">${ca(ch.taxesEachCad||0)}</span></div>
-        <div class="kv"><span class="k">Deal score</span><span class="v num">${ch.dealScore ?? "n/a"}</span></div>
-      </div>
-      <div class="box"><h4>Earn plan · ${ep.program || ""}</h4>
-        <div class="kv"><span class="k">Target</span><span class="v num">${nf(ep.target||0)}</span></div>
-        <div class="kv"><span class="k">Projected</span><span class="v num">${nf(ep.projectedPoints||0)}</span></div>
-        <div class="kv"><span class="k">Cushion</span><span class="v num">${(ep.surplus>=0?"+":"")+nf(ep.surplus||0)}</span></div>
-        <div class="kv"><span class="k">Timeline</span><span class="v num">${ep.timelineMonths||0} mo</span></div>
-        <div class="kv"><span class="k">Card fees</span><span class="v num">${ca(ep.cashOutlayFees||0)}</span></div>
-        ${(ep.cards||[]).map((c)=>`<div class="kv"><span class="k">${c.card}</span><span class="v num">+${nf(c.sub)}</span></div>`).join("")}
-      </div>
-    </div>`;
-  box.appendChild(top);
-  if (rc.review) { const r = ce("div", "box"); r.style.marginTop = "14px"; r.innerHTML = `<h4>Reality check</h4><div style="font-size:13.5px;color:var(--body)">${rc.review}</div>`; box.appendChild(r); }
-  if (cf.deliverable) { const d = ce("div", "doc"); d.innerHTML = md(cf.deliverable); box.appendChild(d); }
-}
-
-/* ---------- app boot (runs after sign in) ---------- */
+/* ---------- app boot ---------- */
 async function initApp() {
-  const st = await api("/api/status");
-  $("#modeChip").textContent = (st.live ? "Claude live" : "Deterministic") + " · " + (st.liveAward ? "live availability" : "simulated availability");
-  $("#footNote").textContent = `Upfront workspace. ${st.cards} Canadian cards, ${st.airports} airports, ${st.routes} routes. Availability is simulated and modelled on real 2026 charts; nothing here books a real ticket. Every dollar and point is computed by the engines, not estimated.`;
-  const apts = await api("/api/airports");
-  $("#apts").innerHTML = apts.map((a) => `<option value="${a}">`).join("");
-  loadPrograms();
-  initNextCard();
+  const st = getStatus();
+  $("#modeChip").textContent = st.cards + " Canadian cards";
+  $("#footNote").textContent = `Upfront ranks all ${st.cards} cards in the catalogue with deterministic, commission-blind math, entirely in your browser. Data is refreshed weekly from issuer pages and aggregators. Award-travel tools are in the works. This is general information, not financial advice.`;
+  $("#nbc_spend").innerHTML = SPEND_ORDER.map((c) => `<div class="nbc-spendrow"><span>${CATEGORY_LABELS[c]}</span><div class="nbc-dollar"><span>$</span><input type="number" min="0" data-cat="${c}" placeholder="0" aria-label="${CATEGORY_LABELS[c]} monthly spend"></div></div>`).join("");
+  const defaults = { groceries: 800, dining: 400, recurring: 300, everything_else: 600 };
+  $("#nbc_spend").querySelectorAll("input").forEach((i) => { if (defaults[i.dataset.cat]) i.value = defaults[i.dataset.cat]; i.addEventListener("input", saveProfileSoon); });
+  $("#nbc_travel").innerHTML = Object.entries(REGION_LABELS).map(([k, v]) => `<span class="fchip" data-region="${k}" role="button" tabindex="0">${v}</span>`).join("");
+  $("#nbc_travel").querySelectorAll(".fchip").forEach((ch) => ch.onclick = () => { ch.classList.toggle("on"); if (nbcTravel.has(ch.dataset.region)) nbcTravel.delete(ch.dataset.region); else nbcTravel.add(ch.dataset.region); saveProfileSoon(); });
+  ["#nbc_income", "#nbc_household", "#nbc_credit", "#nbc_fees", "#nbc_freq", "#nbc_rankby"].forEach((s) => $(s).addEventListener("change", saveProfileSoon));
+  $("#nbc_addpurchase").onclick = addPurchaseRow;
+  wireCardSearch("#nbc_cardsearch", "#nbc_cardresults", () => nbcHeld, (id) => { nbcHeld.add(id); renderHeldChips(); renderWallet(); saveProfileSoon(); });
+  wireCardSearch("#nbc_histsearch", "#nbc_histresults", () => nbcHist, (id) => { nbcHist.add(id); renderHistChips(); saveProfileSoon(); });
+  wireCardSearch("#w_cardsearch", "#w_cardresults", () => nbcHeld, (id) => { nbcHeld.add(id); renderHeldChips(); renderWallet(); saveProfileSoon(); });
+  const catSel = SPEND_ORDER.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("");
+  $("#w_cat").innerHTML = catSel;
+  $("#bb_cat").innerHTML = catSel;
+  renderHeldChips(); renderHistChips();
+  const saved = await store.loadProfile();
+  if (saved) applyAnswers(saved);
   const p = new URLSearchParams(location.search);
-  if (p.get("from")) $("#s_from").value = p.get("from").toUpperCase();
-  if (p.get("to")) $("#s_to").value = p.get("to").toUpperCase();
-  if (p.get("month")) $("#s_month").value = p.get("month");
-  if (p.get("cabin")) { const b = [...$("#s_cabin").querySelectorAll("button")].find((x) => x.dataset.v.toLowerCase() === p.get("cabin").toLowerCase()); if (b) { $("#s_cabin").querySelectorAll("button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); } }
-  if (p.get("view")) gotoView(p.get("view"));
-  if (p.get("sub")) setSub(p.get("sub"));
-  if (p.get("run")) $("#searchForm").requestSubmit();
-  if (p.get("earn")) { await loadPrograms(); $("#earnForm").requestSubmit(); }
-  if (p.get("load")) { gotoView("plan"); const cf = await api("/api/engagement/" + p.get("load")); renderRun(cf); }
+  if (p.get("view") && ["nextcard", "wallet", "bigbuy", "catalog"].includes(p.get("view"))) setSub(p.get("view"));
 }
+
+/* ---------- terms modal ---------- */
+document.querySelectorAll("[data-tc]").forEach((el) => el.onclick = () => $("#tcModal").classList.remove("hidden"));
+$("#tcClose").onclick = () => $("#tcModal").classList.add("hidden");
+$("#tcModal").onclick = (e) => { if (e.target.id === "tcModal") $("#tcModal").classList.add("hidden"); };
+
+/* ---------- account centre + password reset ---------- */
+async function refreshAcctSaved() {
+  try { const prof = await store.loadProfile(); $("#acctSaved").textContent = prof ? `Survey saved · ${(prof.holdings || []).length} ${((prof.holdings || []).length === 1 ? "card" : "cards")} in your wallet.` : "No survey saved yet."; } catch { $("#acctSaved").textContent = ""; }
+}
+function openAcct() { $("#acctEmail").textContent = currentUser || ""; $("#acctMsg").textContent = ""; $("#acctModal").classList.remove("hidden"); refreshAcctSaved(); }
+function openPwReset() { $("#appShell").classList.add("hidden"); $("#auth").classList.remove("hidden"); $("#pwModal").classList.remove("hidden"); }
+$("#userChip").onclick = openAcct;
+$("#acctClose").onclick = () => $("#acctModal").classList.add("hidden");
+$("#acctModal").onclick = (e) => { if (e.target.id === "acctModal") $("#acctModal").classList.add("hidden"); };
+$("#acctSignout").onclick = () => auth.logout();
+$("#acctClear").onclick = async () => {
+  if (!confirm("Delete your saved survey and wallet? This cannot be undone.")) return;
+  $("#acctMsg").textContent = "Deleting...";
+  try { await store.clearMine(); nbcHeld = new Set(); nbcHist = new Set(); nbcTravel = new Set(); tracking = {}; $("#acctMsg").textContent = "Your saved data was deleted."; setTimeout(() => location.reload(), 900); }
+  catch (e) { $("#acctMsg").textContent = e.message; }
+};
+$("#au_forgotlink").onclick = async () => {
+  const email = $("#au_user").value.trim();
+  $("#au_err").style.color = "";
+  if (!email) { $("#au_err").textContent = "Enter your email above first, then click Forgot password."; return; }
+  try { await initBackend(); const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname }); if (error) throw error; $("#au_err").style.color = "var(--muted)"; $("#au_err").textContent = "If an account exists for that email, a reset link is on its way."; }
+  catch (e) { $("#au_err").style.color = ""; $("#au_err").textContent = e.message; }
+};
+$("#pw_save").onclick = async () => {
+  const p = $("#pw_new").value; $("#pw_err").textContent = "";
+  if (p.length < 6) { $("#pw_err").textContent = "Password must be at least 6 characters."; return; }
+  try { await initBackend(); const { data, error } = await sb.auth.updateUser({ password: p }); if (error) throw error; $("#pwModal").classList.add("hidden"); if (history.replaceState) history.replaceState(null, "", location.pathname); startSession(data.user.email); }
+  catch (e) { $("#pw_err").textContent = e.message; }
+};
 
 /* ---------- auth wiring ---------- */
 let authMode = "login";
@@ -1006,42 +934,7 @@ $("#authForm").onsubmit = async (e) => {
 };
 $("#logoutBtn").onclick = (e) => { e.preventDefault(); auth.logout(); };
 
-/* ---------- terms & conditions modal ---------- */
-document.querySelectorAll("[data-tc]").forEach((el) => el.onclick = () => $("#tcModal").classList.remove("hidden"));
-$("#tcClose").onclick = () => $("#tcModal").classList.add("hidden");
-$("#tcModal").onclick = (e) => { if (e.target.id === "tcModal") $("#tcModal").classList.add("hidden"); };
-
-/* ---------- account centre + password reset ---------- */
-async function refreshAcctSaved() {
-  try { const [prof, engs] = await Promise.all([store.loadProfile(), store.list()]); $("#acctSaved").textContent = `${prof ? "Survey saved" : "No survey saved yet"} · ${engs.length} saved ${engs.length === 1 ? "trip" : "trips"}.`; } catch { $("#acctSaved").textContent = ""; }
-}
-function openAcct() { $("#acctEmail").textContent = currentUser || ""; $("#acctMsg").textContent = ""; $("#acctModal").classList.remove("hidden"); refreshAcctSaved(); }
-function openPwReset() { $("#appShell").classList.add("hidden"); $("#auth").classList.remove("hidden"); $("#pwModal").classList.remove("hidden"); }
-$("#userChip").onclick = openAcct;
-$("#acctClose").onclick = () => $("#acctModal").classList.add("hidden");
-$("#acctModal").onclick = (e) => { if (e.target.id === "acctModal") $("#acctModal").classList.add("hidden"); };
-$("#acctSignout").onclick = () => auth.logout();
-$("#acctClear").onclick = async () => {
-  if (!confirm("Delete your saved survey and trips? This cannot be undone.")) return;
-  $("#acctMsg").textContent = "Deleting...";
-  try { await store.clearMine(); nbcHeld = new Set(); nbcTravel = new Set(); nextcardInited = false; $("#acctMsg").textContent = "Your saved data was deleted."; setTimeout(() => location.reload(), 900); }
-  catch (e) { $("#acctMsg").textContent = e.message; }
-};
-$("#au_forgotlink").onclick = async () => {
-  const email = $("#au_user").value.trim();
-  $("#au_err").style.color = "";
-  if (!email) { $("#au_err").textContent = "Enter your email above first, then click Forgot password."; return; }
-  try { await initBackend(); const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname }); if (error) throw error; $("#au_err").style.color = "var(--muted)"; $("#au_err").textContent = "If an account exists for that email, a reset link is on its way."; }
-  catch (e) { $("#au_err").style.color = ""; $("#au_err").textContent = e.message; }
-};
-$("#pw_save").onclick = async () => {
-  const p = $("#pw_new").value; $("#pw_err").textContent = "";
-  if (p.length < 6) { $("#pw_err").textContent = "Password must be at least 6 characters."; return; }
-  try { await initBackend(); const { data, error } = await sb.auth.updateUser({ password: p }); if (error) throw error; $("#pwModal").classList.add("hidden"); if (history.replaceState) history.replaceState(null, "", location.pathname); startSession(data.user.email); }
-  catch (e) { $("#pw_err").textContent = e.message; }
-};
-
-/* ---------- adapt the sign-in screen to the backend, then restore any existing session ---------- */
+/* ---------- session restore ---------- */
 (async () => {
   if (USE_SUPABASE) {
     $("#au_user_label").textContent = "Email";

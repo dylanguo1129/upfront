@@ -199,6 +199,235 @@ function scoreCard(card, ctx) {
   return { card, rec };
 }
 
+/** Rank the user's HELD cards by reward value for one spend category+amount ("which card should I use?"). */
+export function rankHeldCardsForCategory(input, category, spendCents, catalog) {
+  const preferredRegions = regionsFromTravelPlans(input.travelPlans || []);
+  const profile = input.profile;
+  const cppCache = new Map();
+  const cppOf = (currencyId) => { let c = cppCache.get(currencyId); if (!c) { c = resolveCpp(currencyId, preferredRegions, profile, catalog); cppCache.set(currencyId, c); } return c; };
+  const held = (input.holdings || []).map((h) => byId(catalog.cards, h.cardId)).filter(Boolean);
+  const out = held.map((card) => {
+    const res = cppOf(card.currencyId);
+    const points = annualCategoryPoints(card, category, spendCents);
+    const rule = earnRuleFor(card, category);
+    return { cardId: card.id, cardName: card.name, issuer: card.issuer, currencyId: card.currencyId, currencyName: res.currencyName, cpp: res.cpp, multiplier: rule?.multiplier ?? everythingElseMultiplier(card), points: Math.round(points), valueCents: Math.round(points * res.cpp) };
+  });
+  out.sort((a, b) => b.valueCents - a.valueCents);
+  return out;
+}
+
+// ---- big-purchase planner: multiple-choice knapsack over welcome-bonus tier-stops ----
+function chooseGroups(groups, capacity, maxCount) {
+  const memo = new Map();
+  const go = (i, capLeft, kLeft) => {
+    if (i >= groups.length || kLeft <= 0) return { value: 0, picks: [] };
+    const key = `${i}|${capLeft}|${kLeft}`;
+    const cached = memo.get(key);
+    if (cached) return cached;
+    let best = go(i + 1, capLeft, kLeft);
+    const opts = groups[i];
+    for (let o = 0; o < opts.length; o++) {
+      if (opts[o].weight > capLeft) continue;
+      const sub = go(i + 1, capLeft - opts[o].weight, kLeft - 1);
+      const value = sub.value + opts[o].value;
+      if (value > best.value) best = { value, picks: [{ group: i, option: o }, ...sub.picks] };
+    }
+    memo.set(key, best);
+    return best;
+  };
+  return go(0, capacity, maxCount).picks;
+}
+
+function classifyEligibility(wb) {
+  if (wb.eligibilityRule === "once_per_lifetime" || wb.eligibilityRule === "new_clients_only")
+    return { kind: "lifetime", oneShot: true, note: "Once-per-lifetime bonus, your one shot, so the plan grabs the full bonus or skips it." };
+  if (wb.eligibilityRule === "no_bonus_if_held_in_months") {
+    const months = wb.heldWithinMonths ?? 24;
+    return { kind: "cooldown", oneShot: false, note: `Cooldown, you can earn this bonus again about ${months} months after your last one.` };
+  }
+  return { kind: "repeatable", oneShot: false, note: "Repeatable, you can earn this bonus again later." };
+}
+
+const POINTS_PER_HARD_PULL = 5;
+const RISKY_INQUIRIES_PER_YEAR = 6;
+const PRIME_APPROVAL_FLOOR = 660;
+const UNKNOWN_BAND_COMFORT = 2;
+const COMFORTABLE_CARDS_PER_YEAR = { excellent: 5, good: 3, fair: 2 };
+const BAND_MIDPOINT = { excellent: 830, good: 692, fair: 610 };
+
+function computeCreditImpact(band, hardPulls) {
+  const comfortableCount = band ? COMFORTABLE_CARDS_PER_YEAR[band] : UNKNOWN_BAND_COMFORT;
+  const estPointsDrop = hardPulls * POINTS_PER_HARD_PULL;
+  const startingScoreEstimate = band ? BAND_MIDPOINT[band] : null;
+  const projectedScoreEstimate = startingScoreEstimate != null ? startingScoreEstimate - estPointsDrop : null;
+  const crossesFloor = startingScoreEstimate != null && startingScoreEstimate >= PRIME_APPROVAL_FLOOR && projectedScoreEstimate < PRIME_APPROVAL_FLOOR;
+  let riskLevel;
+  if (hardPulls > RISKY_INQUIRIES_PER_YEAR || crossesFloor) riskLevel = "high";
+  else if (hardPulls > comfortableCount) riskLevel = "caution";
+  else riskLevel = "ok";
+  const pulls = `${hardPulls} hard ${hardPulls === 1 ? "inquiry" : "inquiries"}`;
+  const recover = `~${estPointsDrop} pts, recovering within ~12 months`;
+  const forTier = band ? ` for ${band} credit` : "";
+  let note;
+  if (hardPulls === 0) note = "No new applications, no credit hit.";
+  else if (hardPulls > RISKY_INQUIRIES_PER_YEAR) note = `${pulls} in a year looks risky to lenders and can trigger declines. Open fewer, or stage them across more than a year.`;
+  else if (crossesFloor) note = `${pulls} (${recover}) could pull your estimated score below ~${PRIME_APPROVAL_FLOOR}, the usual approval floor. Risky if you'll need a loan or mortgage soon.`;
+  else if (riskLevel === "caution") note = `${pulls} (${recover}) is above the comfortable pace${forTier} (~${comfortableCount}/year). Approval odds dip, space applications ~3 months apart.`;
+  else note = `${pulls} (${recover}) is a comfortable pace${forTier}. Space them ~3 months apart.`;
+  return { hardPulls, pointsPerPull: POINTS_PER_HARD_PULL, estPointsDrop, startingScoreEstimate, projectedScoreEstimate, comfortableCount, riskLevel, note };
+}
+
+/** Profit-optimal set of NEW cards for one big purchase, splitting spend to stack welcome bonuses. */
+export function planBigPurchase(input, purchaseCents, category, catalog, options = {}) {
+  const profile = input.profile;
+  const preferredRegions = regionsFromTravelPlans(input.travelPlans || []);
+  const now = options.now ? new Date(options.now) : undefined;
+  const cppCache = new Map();
+  const cppOf = (currencyId) => { let c = cppCache.get(currencyId); if (!c) { c = resolveCpp(currencyId, preferredRegions, profile, catalog); cppCache.set(currencyId, c); } return c; };
+  const heldIds = new Set((input.holdings || []).map((h) => h.cardId));
+  const heldCards = (input.holdings || []).map((h) => byId(catalog.cards, h.cardId)).filter(Boolean);
+  const bonusHistory = new Map((input.bonusHistory || []).map((b) => [b.cardId, b]));
+  const earnOf = (card, cents) => (cents > 0 ? categoryValueCents(card, category, cents, cppOf(card.currencyId).cpp) : 0);
+  const UNIT = 10000;
+  const band = profile.creditScoreBand;
+
+  let singleCardName = null, singleCardValue = 0;
+  const groups = [];
+  for (const card of catalog.cards) {
+    if (!meetsObtainability(card, profile, heldIds, options.excludeCandidateCategories)) continue;
+    const wb = card.welcomeBonus;
+    if (!wb || wb.tiers.length === 0) continue;
+    if (!bonusEligibility(card, bonusHistory, now).eligible) continue;
+    if (wb.categoryRestriction && !wb.categoryRestriction.includes(category)) continue;
+    if (wb.excludesCategories?.includes(category)) continue;
+    const tiers = [...wb.tiers].sort((a, b) => a.minSpendCents - b.minSpendCents);
+    const cum = [];
+    let running = 0;
+    for (let i = 0; i < tiers.length; i++) { running += tiers[i].amount; cum[i] = running; }
+    const bonusCurrencyId = wb.currencyId ?? card.currencyId;
+    const cppRes = cppOf(bonusCurrencyId);
+    const cpp = cppRes.cpp;
+    const feeYear1 = card.feeWaivedFirstYear ? 0 : card.annualFeeCents;
+    const elig = classifyEligibility(wb);
+    const reachable = [];
+    for (let i = 0; i < tiers.length; i++) if (tiers[i].minSpendCents > 0 && tiers[i].minSpendCents <= purchaseCents) reachable.push(i);
+    if (reachable.length === 0) continue;
+    const topIdx = reachable[reachable.length - 1];
+    const maxReachableTierHit = topIdx + 1;
+    const singleVal = cum[topIdx] * cpp - feeYear1 + earnOf(card, purchaseCents);
+    if (singleVal > singleCardValue) { singleCardValue = singleVal; singleCardName = card.name; }
+    const stopIdxs = elig.oneShot ? [topIdx] : reachable;
+    const opts = [];
+    for (const i of stopIdxs) {
+      const minSpendCents = tiers[i].minSpendCents;
+      const points = cum[i];
+      const bonusValueCents = points * cpp;
+      const earnCents = earnOf(card, minSpendCents);
+      const value = bonusValueCents + earnCents - feeYear1;
+      if (value <= 0) continue;
+      const next = i + 1 < tiers.length ? tiers[i + 1] : null;
+      opts.push({ weight: Math.ceil(minSpendCents / UNIT), value, card, tierHit: i + 1, tiersAvailable: tiers.length, maxReachableTierHit, minSpendCents, points, bonusCurrencyId, bonusCurrencyName: cppRes.currencyName, cpp, bonusValueCents, feeYear1, earnCents, eligibility: elig.kind, eligibilityNote: elig.note, nextTierAmount: next ? next.amount : null, nextTierExtraSpendCents: next ? next.minSpendCents - minSpendCents : null });
+    }
+    if (opts.length > 0) groups.push(opts);
+  }
+  for (const card of heldCards) { const v = earnOf(card, purchaseCents); if (v > singleCardValue) { singleCardValue = v; singleCardName = card.name; } }
+  const singleCardValueCents = round(singleCardValue);
+  groups.sort((a, b) => {
+    const av = Math.max(...a.map((o) => o.value)), bv = Math.max(...b.map((o) => o.value));
+    const aw = Math.min(...a.map((o) => o.weight)), bw = Math.min(...b.map((o) => o.weight));
+    return bv - av || aw - bw || (a[0].card.id < b[0].card.id ? -1 : 1);
+  });
+  for (const g of groups) g.sort((a, b) => a.weight - b.weight || a.value - b.value);
+  const maxNeeded = groups.reduce((s, g) => s + Math.max(...g.map((o) => o.weight)), 0);
+  const dpCapacity = Math.min(Math.floor(purchaseCents / UNIT), maxNeeded);
+  const weights = groups.map((g) => g.map((o) => ({ weight: o.weight, value: o.value })));
+  const feasiblePicks = chooseGroups(weights, dpCapacity, groups.length);
+  const maxFeasibleCardCount = feasiblePicks.length;
+  const comfortable = band ? COMFORTABLE_CARDS_PER_YEAR[band] : UNKNOWN_BAND_COMFORT;
+  const recommendedCardCount = Math.min(maxFeasibleCardCount, comfortable);
+  const requested = options.maxCards != null ? Math.floor(options.maxCards) : recommendedCardCount;
+  const cap = Math.max(0, Math.min(requested, maxFeasibleCardCount));
+  const picks = cap >= maxFeasibleCardCount ? feasiblePicks : chooseGroups(weights, dpCapacity, cap);
+  const chosen = picks.map((p) => groups[p.group][p.option]);
+  const allocatedCents = chosen.reduce((s, o) => s + o.minSpendCents, 0);
+  const leftoverCents = Math.max(0, purchaseCents - allocatedCents);
+  let leftoverCardName = null, leftoverEarnCents = 0;
+  for (const card of [...chosen.map((o) => o.card), ...heldCards]) {
+    const v = earnOf(card, leftoverCents);
+    if (v > leftoverEarnCents) { leftoverEarnCents = v; leftoverCardName = card.name; }
+  }
+  const cards = chosen.map((o) => {
+    let skippedTierNote;
+    if (o.tierHit < o.maxReachableTierHit && o.nextTierAmount != null && o.nextTierExtraSpendCents != null) {
+      const at = Math.round(o.minSpendCents / 100).toLocaleString("en-CA");
+      const more = Math.round(o.nextTierExtraSpendCents / 100).toLocaleString("en-CA");
+      skippedTierNote = `Stops at the $${at} tier. The next tier's +${o.nextTierAmount.toLocaleString("en-CA")} ${o.bonusCurrencyName} would need $${more} more spend, worth more unlocking another card.`;
+    }
+    return { cardId: o.card.id, cardName: o.card.name, issuer: o.card.issuer, allocateCents: o.minSpendCents, bonusPoints: o.points, bonusCurrencyId: o.bonusCurrencyId, bonusCurrencyName: o.bonusCurrencyName, cppUsed: o.cpp, bonusValueCents: round(o.bonusValueCents), annualFeeCents: o.card.annualFeeCents, feeWaivedYear1: o.card.feeWaivedFirstYear ?? false, earnOnAllocationCents: round(o.earnCents), netValueCents: round(o.value), tierHit: o.tierHit, tiersAvailable: o.tiersAvailable, skippedTierNote, eligibility: o.eligibility, eligibilityNote: o.eligibilityNote };
+  });
+  const totalValueCents = round(cards.reduce((s, c) => s + c.netValueCents, 0) + leftoverEarnCents);
+  return { purchaseCents, category, maxCards: options.maxCards != null ? cap : null, recommendedCardCount, maxFeasibleCardCount, creditImpact: computeCreditImpact(band, chosen.length), cards, allocatedCents, leftoverCents, leftoverCardName, leftoverEarnCents: round(leftoverEarnCents), totalValueCents, singleCardName, singleCardValueCents, upliftVsSingleCents: round(totalValueCents - singleCardValueCents) };
+}
+
+// ---- welcome-bonus tracker + perk reminders ----
+const DAY_MS = 86400000;
+function addMonths(d, months) { const r = new Date(d.getTime()); r.setMonth(r.getMonth() + months); return r; }
+function daysUntil(now, target) { return Math.floor((target.getTime() - now.getTime()) / DAY_MS); }
+
+/** Progress toward a held card's welcome-bonus minimum spend, with a profile-tailored pace. */
+export function trackWelcomeBonus(card, openedOnIso, spentCents, nowIso, monthlyOrganicCents, cpp) {
+  const wb = card.welcomeBonus;
+  if (!wb || wb.tiers.length === 0) return null;
+  const tiers = [...wb.tiers].sort((a, b) => a.minSpendCents - b.minSpendCents);
+  const cum = [];
+  let running = 0;
+  for (let i = 0; i < tiers.length; i++) { running += tiers[i].amount; cum[i] = running; }
+  const nextIdx = tiers.findIndex((t) => t.minSpendCents > spentCents);
+  const idx = nextIdx === -1 ? tiers.length - 1 : nextIdx;
+  const targetCents = tiers[idx].minSpendCents;
+  const windowMonths = tiers[idx].windowMonths;
+  const fullBonusPoints = cum[idx];
+  const opened = new Date(openedOnIso);
+  const now = new Date(nowIso);
+  const deadline = addMonths(opened, windowMonths);
+  const daysLeft = daysUntil(now, deadline);
+  const remainingCents = Math.max(0, targetCents - spentCents);
+  const pct = targetCents > 0 ? Math.min(1, Math.max(0, spentCents / targetCents)) : 1;
+  const weeksLeft = Math.max(daysLeft, 0) / 7;
+  const organicCoversCents = Math.max(0, Math.round((monthlyOrganicCents * Math.max(0, daysLeft)) / 30));
+  let status;
+  if (remainingCents === 0) status = "done";
+  else if (daysLeft < 0) status = "expired";
+  else if (spentCents + organicCoversCents >= targetCents) status = "on_track";
+  else status = "behind";
+  const active = status === "on_track" || status === "behind";
+  const perWeek = (cents) => (active && weeksLeft > 0 ? Math.round(cents / Math.max(weeksLeft, 1 / 7)) : 0);
+  return { cardId: card.id, cardName: card.name, currencyId: wb.currencyId ?? card.currencyId, targetCents, spentCents, remainingCents, pct, windowMonths, deadlineIso: deadline.toISOString(), daysLeft, status, recommendedPerWeekCents: perWeek(remainingCents), organicCoversCents, extraPerWeekCents: perWeek(Math.max(0, remainingCents - organicCoversCents)), fullBonusPoints, bonusValueCents: Math.round(fullBonusPoints * cpp) };
+}
+
+function endOfPeriod(now, cadence) {
+  const y = now.getFullYear(), m = now.getMonth();
+  if (cadence === "monthly") return new Date(y, m + 1, 0);
+  if (cadence === "quarterly") return new Date(y, Math.floor(m / 3) * 3 + 3, 0);
+  if (cadence === "semiannual") return new Date(y, m < 6 ? 6 : 12, 0);
+  return new Date(y, 12, 0);
+}
+function nextAnniversary(opened, now) {
+  const thisYear = new Date(now.getFullYear(), opened.getMonth(), opened.getDate());
+  return thisYear.getTime() >= now.getTime() ? thisYear : new Date(now.getFullYear() + 1, opened.getMonth(), opened.getDate());
+}
+/** Use-it-or-lose-it perk reminders for a held card. */
+export function cardPerkReminders(card, openedOnIso, nowIso) {
+  const now = new Date(nowIso);
+  const opened = new Date(openedOnIso);
+  const out = (card.perks || []).map((p) => {
+    const useBy = p.kind === "keep_active" ? nextAnniversary(opened, now) : endOfPeriod(now, p.cadence);
+    return { id: p.id, kind: p.kind, label: p.label, amountCents: p.amountCents ?? null, cadence: p.cadence, useByIso: useBy.toISOString(), daysLeft: daysUntil(now, useBy), notes: p.notes ?? null };
+  });
+  out.sort((a, b) => a.daysLeft - b.daysLeft);
+  return out;
+}
+
 /** Top-N "next best card" recommendations for a survey input. Ranked by first-year (default) or ongoing net value. */
 export function recommend(input, catalog, options = {}) {
   const profile = input.profile;
