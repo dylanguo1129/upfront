@@ -2778,7 +2778,7 @@ export default {
         },
         {
           "category": "everything_else",
-          "multiplier": 0.5
+          "multiplier": 1
         }
       ],
       "welcomeBonus": null,
@@ -2968,22 +2968,7 @@ export default {
           "multiplier": 1
         }
       ],
-      "welcomeBonus": {
-        "tiers": [
-          {
-            "amount": 10000,
-            "minSpendCents": 500000,
-            "windowMonths": 3
-          },
-          {
-            "amount": 20000,
-            "minSpendCents": 2000000,
-            "windowMonths": 12
-          }
-        ],
-        "eligibilityRule": "none",
-        "expiresOn": "2026-11-04"
-      },
+      "welcomeBonus": null,
       "perks": [],
       "isActive": true
     },
@@ -3363,7 +3348,7 @@ export default {
     {
       "fromCurrencyId": "mr",
       "toCurrencyId": "asia",
-      "ratio": 0.8,
+      "ratio": 0.75,
       "isActive": true
     },
     {
